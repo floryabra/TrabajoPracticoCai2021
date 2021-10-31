@@ -6,13 +6,27 @@ using System.Threading.Tasks;
 
 namespace TPCAI2021
 {
-    public class Cliente
+    class Cliente
     {
-        public string Nombre { get; }
+        public int nroClienteCorporativo;
+        public CuentaCorriente cuenta;
+        public string listaPersonalAutorizado;
 
-        public Cliente(string nombre)
+        public Cliente(int nroClienteCorporativo, CuentaCorriente cuenta, string listaPersonalAutorizado)
         {
-            Nombre = nombre;
+            this.nroClienteCorporativo = nroClienteCorporativo;
+            this.cuenta = cuenta;
+            this.listaPersonalAutorizado = listaPersonalAutorizado;
+        }
+
+        public string buscarCliente()
+        {
+            return "test buscarCliente";
+        }
+
+        public string ingresarCliente()
+        {
+            return "test ingresarCliente";
         }
 
     }
