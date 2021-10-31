@@ -13,10 +13,10 @@ namespace TPCAI2021
         public string ciudad;
         public string calle;
         public int codigoPostal;
-        public int piso;
-        public char depto;
+        public int? piso;
+        public char? depto;
 
-        public Direccion(bool alcanceNacional, string provincia, string ciudad, string calle, int codigoPostal, int piso, char depto)
+        public Direccion(bool alcanceNacional, string provincia, string ciudad, string calle, int codigoPostal, int? piso, char? depto)
         {
             this.alcanceNacional = alcanceNacional;
             this.provincia = provincia;
