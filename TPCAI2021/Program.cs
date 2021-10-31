@@ -10,10 +10,11 @@ namespace TPCAI2021
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Holis");
 
-            var cliente = new Cliente("Juan");
-            Console.WriteLine("Se creó un cliente por defecto con el nombre de " + cliente.Nombre);
+
+            var cuenta = new CuentaCorriente(123, 123, (decimal)10.0, "test");
+            var cliente = new Cliente(123, cuenta, "test");
+            Console.WriteLine("Se creó un cliente por defecto con el nro de cuenta: " + cliente.nroClienteCorporativo);
             Console.ReadLine();
         }
     }
