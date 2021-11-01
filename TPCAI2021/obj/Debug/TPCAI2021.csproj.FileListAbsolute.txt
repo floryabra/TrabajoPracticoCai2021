@@ -1,0 +1,2 @@
+/home/florencia/Documents/FLor/GitHubFCE/TrabajoPracticoCai/TrabajoPracticoCai2021/TPCAI2021/obj/Debug/TPCAI2021.exe
+/home/florencia/Documents/FLor/GitHubFCE/TrabajoPracticoCai/TrabajoPracticoCai2021/TPCAI2021/obj/Debug/TPCAI2021.pdb
