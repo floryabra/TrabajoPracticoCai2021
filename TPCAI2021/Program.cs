@@ -49,6 +49,10 @@ namespace TPCAI2021
 
         static void RealizarSolicitudDeServicio(int idClienteCorporativo) {
             // Pedir, validar datos y armar tarifa
+            // Para id de servicio/paquete validar contra el ultimo agregado a una lista/archivo
+            // Armar tipo de servicio: Crear nuevo objeto de TipoServicio (interface entrega, retiro: puerta o sucursal(si es puerta se crean los objetos dirección), prioridad)
+            // Class paquete (Peso, tipo paquete)
+            // Armar tarifa
             // Aprobar orden de servicio y guardar
         }
 
