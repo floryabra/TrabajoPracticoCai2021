@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,18 +11,44 @@ namespace TPCAI2021
     {
         static void Main(string[] args)
         {
-            int idClienteCorporativo = IngresarClienteCorporativo();
-            if(idClienteCorporativo != -1) 
+            bool mostrarMenu = true;
+            while (mostrarMenu)
             {
-                MostrarMenuClienteCorporativo(idClienteCorporativo);
+                mostrarMenu = MenuPrincipal();
             }
-            var cuenta = new CuentaCorriente(123, 123, (decimal)10.0, "test");
-            var cliente = new Cliente(123, cuenta, "test");
-            Console.WriteLine("Se creó un cliente por defecto con el nro de cuenta: " + cliente.nroClienteCorporativo);
-            Console.ReadLine();
+
         }
 
-        static void IngresarClienteCorporativo() {
+        private static bool MenuPrincipal()
+        {
+            Console.Clear();
+            Console.WriteLine("Seleccione una opción:");
+            Console.WriteLine("1) Realizar solicitud de servicio");
+            Console.WriteLine("2) Consultar estado de servicio");
+            Console.WriteLine("3) Consultar estado de cuenta");
+            Console.WriteLine("4) Ingresar cliente corporativo");
+            Console.WriteLine("5) Salir");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    OrdenServicio.realizarOrdenServicio();
+                    return true;
+                case "2":
+                    return true;
+                case "3":
+                    return true;
+                case "4":
+                    return true;
+                case "5":
+                    return false;
+                default:
+                    Console.WriteLine("Opción inválida");
+                    return true;
+            }
+        }
+
+        /*static void IngresarClienteCorporativo() {
             // ingresar y validar cliente corpo
             // return true si esta ok
             return -1;
@@ -46,7 +73,7 @@ namespace TPCAI2021
                 default:
             }
         }
-
+        
         static void RealizarSolicitudDeServicio(int idClienteCorporativo) {
             // Pedir, validar datos y armar tarifa
             // Para id de servicio/paquete validar contra el ultimo agregado a una lista/archivo
@@ -64,6 +91,8 @@ namespace TPCAI2021
         static void ConsultarEstadoDeCuenta(int idClienteCorporativo) {
             // mostrar status de cuenta cte.
             // CuentaCorriente::conocerEstadoCuentaCorriente();
-        }
+        }*/
+
+        
     }
 }
