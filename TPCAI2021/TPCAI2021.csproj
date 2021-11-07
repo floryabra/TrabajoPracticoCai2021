@@ -51,11 +51,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provincia.cs" />
+    <Compile Include="Sucursal.cs" />
     <Compile Include="TipoServicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="data\provincias_regiones.csv" />
+    <None Include="data\sucursales.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
