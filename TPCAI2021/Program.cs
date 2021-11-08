@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPCAI2021.data;
 
 namespace TPCAI2021
 {
@@ -11,88 +12,113 @@ namespace TPCAI2021
     {
         static void Main(string[] args)
         {
-            bool mostrarMenu = true;
-            while (mostrarMenu)
+            //Console.CursorVisible = false;
+            
+            List<string> menuItems = new List<string>()
             {
-                mostrarMenu = MenuPrincipal();
+                "Realizar solicitud de servicio",
+                "Consultar estado de servicio",
+                "Consultar estado de cuenta",
+                "Gestionar db"
+            };
+
+            while (true)
+            {
+                string opcionSeleccionada = mostrarMenu(menuItems);
+
+                if (opcionSeleccionada == "Realizar solicitud de servicio")
+                {
+                    OrdenServicio.realizarOrdenServicio();
+                }
+                else if (opcionSeleccionada == "Gestionar datos")
+                {
+                    gestionarDatos();
+                }
+                else if (opcionSeleccionada == "Salir")
+                {
+                    Environment.Exit(0);
+                }
+                Console.ReadKey();
             }
 
         }
 
-        private static bool MenuPrincipal()
+
+        public static string mostrarMenu(List<string> items, string titulo = "Seleccione una opción:")
+        {
+
+            Console.Clear();
+            Console.WriteLine(titulo);
+            Console.WriteLine("--------");
+            int indiceMenu = 1;
+            for (int i = 0; i < items.Count; i++)
+            {
+                Console.WriteLine(indiceMenu + ") " + items[i]);
+                indiceMenu++;
+            }
+
+            Console.WriteLine(indiceMenu + ") Salir");
+            Console.WriteLine("--------");
+
+            string indiceOpcionSeleccionadaMenu = Console.ReadLine();
+            if (int.TryParse(indiceOpcionSeleccionadaMenu, out int opcionSeleccionada))
+            {
+                if (opcionSeleccionada <= items.Count) {
+                    return items[opcionSeleccionada - 1].Trim();
+                } else
+                {
+                    return "Salir";
+                }
+                
+            } else
+            {
+                Console.WriteLine("Opcion inválida");
+                return "Salir";
+            }
+        }
+
+        static void ingresarDatos()
         {
             Console.Clear();
-            Console.WriteLine("Seleccione una opción:");
-            Console.WriteLine("1) Realizar solicitud de servicio");
-            Console.WriteLine("2) Consultar estado de servicio");
-            Console.WriteLine("3) Consultar estado de cuenta");
-            Console.WriteLine("4) Ingresar cliente corporativo");
-            Console.WriteLine("5) Salir");
-
-            switch (Console.ReadLine())
+            string opcionSeleccionada = "";
+            while (opcionSeleccionada != "5")
             {
-                case "1":
-                    OrdenServicio.realizarOrdenServicio();
-                    return true;
-                case "2":
-                    return true;
-                case "3":
-                    return true;
-                case "4":
-                    return true;
-                case "5":
-                    return false;
-                default:
-                    Console.WriteLine("Opción inválida");
-                    return true;
+                Console.WriteLine("Datos a gestionar:");
+                Console.WriteLine("1) Sucursales");
+                Console.WriteLine("2) Clientes");
+                Console.WriteLine("3) Salir");
+                opcionSeleccionada = Console.ReadLine();
+
+             
             }
         }
 
-        /*static void IngresarClienteCorporativo() {
-            // ingresar y validar cliente corpo
-            // return true si esta ok
-            return -1;
-        }
-
-        static void MostrarMenuClienteCorporativo(int idClienteCorporativo) {
-            // Mostrar las opciones de menu y llamar a la función de la option elegida
-            switch (variableOpcionDeMenu)
+        static void gestionarDatos()
+        {
+            List<string> menuItems = new List<string>()
             {
-                case 1:
-                    RealizarSolicitudDeServicio(idClienteCorporativo);
-                break;
+                "Sucursales",
+                "Clientes"
+            };
 
-                case 2:
-                    ConsultarEstadoOrdenDeServicio(idClienteCorporativo);
-                break;
+            while (true)
+            {
+                string opcionSeleccionada = mostrarMenu(menuItems, "Seleccione los datos a gestionar");
 
-                case 3:
-                    ConsultarEstadoDeCuenta(idClienteCorporativo);
-                break;
-
-                default:
+                if (opcionSeleccionada == "Sucursales")
+                {
+                    Sucursal.menuABM();
+                }
+                else if (opcionSeleccionada == "Clientes")
+                {
+                    Cliente.menuABM();
+                }
+                else if (opcionSeleccionada == "Salir")
+                {
+                    break;
+                }
+                Console.ReadLine();
             }
         }
-        
-        static void RealizarSolicitudDeServicio(int idClienteCorporativo) {
-            // Pedir, validar datos y armar tarifa
-            // Para id de servicio/paquete validar contra el ultimo agregado a una lista/archivo
-            // Armar tipo de servicio: Crear nuevo objeto de TipoServicio (interface entrega, retiro: puerta o sucursal(si es puerta se crean los objetos dirección), prioridad)
-            // Class paquete (Peso, tipo paquete)
-            // Armar tarifa
-            // Aprobar orden de servicio y guardar
-        }
-
-        static void ConsultarEstadoOrdenDeServicio(int idClienteCorporativo) {
-            // pedir id orden de servicio y mostrar el status
-            // OrdenServicio::conocerEstadoOrdenServicio
-        }
-
-        static void ConsultarEstadoDeCuenta(int idClienteCorporativo) {
-            // mostrar status de cuenta cte.
-            // CuentaCorriente::conocerEstadoCuentaCorriente();
-        }*/
-
-        
     }
 }

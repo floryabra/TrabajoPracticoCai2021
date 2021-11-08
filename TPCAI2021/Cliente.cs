@@ -3,30 +3,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPCAI2021.data;
 
 namespace TPCAI2021
 {
     class Cliente
     {
-        public int nroClienteCorporativo;
-        public CuentaCorriente cuenta;
-        public string listaPersonalAutorizado;
+        public int nroClienteCorporativo { get; set; }
+        public string Nombre { get; set; }
+        public CuentaCorriente cuenta { get; set; }
+        public string listaPersonalAutorizado { get; set; }
 
-        public Cliente(int nroClienteCorporativo, CuentaCorriente cuenta, string listaPersonalAutorizado)
+        public static void buscarCliente(int idCliente)
         {
-            this.nroClienteCorporativo = nroClienteCorporativo;
-            this.cuenta = cuenta;
-            this.listaPersonalAutorizado = listaPersonalAutorizado;
+            var ctx = new TPContext();
+            var clientes = ctx.Clientes.Find(idCliente);
+            Console.WriteLine(clientes.nroClienteCorporativo + "|" + c.Nombre);
         }
 
-        public string buscarCliente()
+        public static void ingresarCliente()
         {
-            return "test buscarCliente";
+            var ctx = new TPContext();
+            Console.WriteLine("Ingrese el nombre del nuevo cliente:");
+            string nombreCliente = Console.ReadLine();
+
+            var cliente = new Cliente() { Nombre = nombreCliente };
+            ctx.Clientes.Add(cliente);
+            ctx.SaveChanges();
+            Console.WriteLine("Cliente agregado.");
         }
 
-        public string ingresarCliente()
+        public static void eliminarCliente()
         {
-            return "test ingresarCliente";
+            var ctx = new TPContext();
+
+            Console.WriteLine("Ingrese el nro de cliente a eliminar");
+
+            int idCliente= int.Parse(Console.ReadLine());
+            Cliente cliente = ctx.Clientes.Find(idCliente);
+
+            ctx.Clientes.Remove(cliente);
+            ctx.SaveChanges();
+
+            Console.WriteLine("Cliente eliminado");
+        }
+
+        public static void listarClientes()
+        {
+            var ctx = new TPContext();
+            var clientes = ctx.Clientes.ToList();
+
+            Console.WriteLine("id | Nombre");
+            foreach (Cliente c in clientes)
+            {
+                Console.WriteLine(c.nroClienteCorporativo + "|" + c.Nombre);
+            }
+        }
+
+
+        public static void menuABM()
+        {
+            List<string> menuItems = new List<string>()
+            {
+                "Agregar cliente",
+                "Eliminar cliente",
+                "Listar cliente"
+            };
+
+            while (true)
+            {
+
+                string opcionSeleccionada = Program.mostrarMenu(menuItems);
+
+                if (opcionSeleccionada == "Agregar cliente")
+                {
+                    ingresarCliente();
+                }
+                else if (opcionSeleccionada == "Eliminar cliente")
+                {
+                    eliminarCliente();
+                }
+                else if (opcionSeleccionada == "Listar clientes")
+                {
+                    listarClientes();
+                }
+                else if (opcionSeleccionada == "Salir")
+                {
+                    break;
+                }
+                Console.ReadKey();
+            }
         }
 
     }

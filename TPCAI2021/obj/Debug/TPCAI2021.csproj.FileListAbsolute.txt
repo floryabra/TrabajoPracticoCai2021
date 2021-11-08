@@ -1,2 +1,14 @@
 /home/florencia/Documents/FLor/GitHubFCE/TrabajoPracticoCai/TrabajoPracticoCai2021/TPCAI2021/obj/Debug/TPCAI2021.exe
 /home/florencia/Documents/FLor/GitHubFCE/TrabajoPracticoCai/TrabajoPracticoCai2021/TPCAI2021/obj/Debug/TPCAI2021.pdb
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\obj\Debug\TPCAI2021.csprojAssemblyReference.cache
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\obj\Debug\TPCAI2021.csproj.CoreCompileInputs.cache
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\obj\Debug\TPCAI2021.exe
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\obj\Debug\TPCAI2021.pdb
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\TPCAI2021.exe.config
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\TPCAI2021.exe
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\TPCAI2021.pdb
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\EntityFramework.dll
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\EntityFramework.xml
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Nicolás\Desktop\CAI\RepoTP\TrabajoPracticoCai2021\TPCAI2021\obj\Debug\TPCAI2021.csproj.CopyComplete

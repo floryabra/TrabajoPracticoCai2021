@@ -107,7 +107,7 @@ namespace TPCAI2021
             if (tipoEntrega == "1")
             {
 
-                string idSucursalOrigen = mostrarSucursales(idProvinciaSeleccionadaDestino);
+                //string idSucursalOrigen = mostrarSucursales(idProvinciaSeleccionadaDestino);
 
             }
             else if (tipoEntrega == "2")
@@ -162,7 +162,7 @@ namespace TPCAI2021
 
             foreach (Sucursal sucu in sucursales)
             {
-                Console.WriteLine(sucu.idSucursal+ ")" + sucu.nombre);
+                Console.WriteLine(sucu.SucursalId + ")" + sucu.Nombre);
             }
             Console.WriteLine("S) Salir");
 
