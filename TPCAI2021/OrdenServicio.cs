@@ -8,7 +8,7 @@ namespace TPCAI2021
 {
     class OrdenServicio
     {
-        public int nroOrdenServicio;
+        public int nroOrdenServicio { get; set; }
         public TipoServicio tipoServicio;
         public Paquete paquete;
         public string estadoOrden;
