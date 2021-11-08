@@ -9,16 +9,21 @@ namespace TPCAI2021
 {
     class Cliente
     {
-        public int nroClienteCorporativo { get; set; }
+        public int ClienteID{ get; set; }
+        public int NroClienteCorporativo { get; set; }
         public string Nombre { get; set; }
-        public CuentaCorriente cuenta { get; set; }
-        public string listaPersonalAutorizado { get; set; }
+        //public CuentaCorriente cuenta { get; set; }
+        public int NroCuentaCorriente { get; set; }
+        public decimal Saldo { get; set; }
+        public string Facturacion { get; set; }
+
+        public string ListaPersonalAutorizado { get; set; }
 
         public static void buscarCliente(int idCliente)
         {
             var ctx = new TPContext();
             var clientes = ctx.Clientes.Find(idCliente);
-            Console.WriteLine(clientes.nroClienteCorporativo + "|" + c.Nombre);
+            Console.WriteLine(clientes.ClienteID + "|" + clientes.Nombre);
         }
 
         public static void ingresarCliente()
@@ -56,7 +61,7 @@ namespace TPCAI2021
             Console.WriteLine("id | Nombre");
             foreach (Cliente c in clientes)
             {
-                Console.WriteLine(c.nroClienteCorporativo + "|" + c.Nombre);
+                Console.WriteLine(c.ClienteID + "|" + c.Nombre);
             }
         }
 
@@ -67,7 +72,7 @@ namespace TPCAI2021
             {
                 "Agregar cliente",
                 "Eliminar cliente",
-                "Listar cliente"
+                "Listar clientes"
             };
 
             while (true)
@@ -90,6 +95,10 @@ namespace TPCAI2021
                 else if (opcionSeleccionada == "Salir")
                 {
                     break;
+                }
+                else
+                {
+                    Console.WriteLine("Opción inválida");
                 }
                 Console.ReadKey();
             }
