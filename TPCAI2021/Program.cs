@@ -30,7 +30,7 @@ namespace TPCAI2021
                 {
                     OrdenServicio.realizarOrdenServicio();
                 }
-                else if (opcionSeleccionada == "Gestionar datos")
+                else if (opcionSeleccionada == "Gestionar db")
                 {
                     gestionarDatos();
                 }
