@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente.cs" />
-    <Compile Include="CuentaCorriente.cs" />
     <Compile Include="data\TPContext.cs" />
     <Compile Include="Direccion.cs" />
     <Compile Include="OrdenServicio.cs" />
