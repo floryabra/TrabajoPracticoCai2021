@@ -9,18 +9,11 @@ namespace TPCAI2021
 {
     class Provincia
     {
-        public int idProvincia;
-        public string nombreProvincia;
-        public int idRegion;
-        public string nombreRegion;
-
-        public Provincia(int idProvincia, string nombreProvincia, int idRegion, string nombreRegion)
-        {
-            this.idProvincia = idProvincia;
-            this.nombreProvincia = nombreProvincia;
-            this.idRegion = idRegion;
-            this.nombreRegion = nombreRegion;
-        }
+        public int ProvinciaID { get; set; }
+        public string Nombre { get; set; }
+        public int IdRegion { get; set; }
+        public string Region { get; set; }
+        public ICollection<Localidad> Localidades { get; set; }
 
         public static List<Provincia> listaProvincias()
         {
@@ -38,7 +31,7 @@ namespace TPCAI2021
                         string nombre_provincia = values[1];
                         int id_region = int.Parse(values[2]);
                         string nombre_region = values[1];
-                        provincias.Add(new Provincia(id_provincia, nombre_provincia, id_region, nombre_region));
+                        //provincias.Add(new Provincia(id_provincia, nombre_provincia, id_region, nombre_region));
                         
                 }
 
