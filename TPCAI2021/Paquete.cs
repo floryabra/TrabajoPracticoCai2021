@@ -8,16 +8,9 @@ namespace TPCAI2021
 {
     class Paquete
     {
-        public int idPaquete;
-        public decimal peso;
-        public string tipoPaquete;
-
-        public Paquete(int idPaquete, decimal peso, string tipoPaquete)
-        {
-            this.idPaquete = idPaquete;
-            this.peso = peso;
-            this.tipoPaquete = tipoPaquete;
-        }
+        public int PaqueteId { get; set; }
+        public decimal Peso { get; set; }
+        public string TipoPaquete { get; set; }
 
         public static void ingresarPaquete()
         {
