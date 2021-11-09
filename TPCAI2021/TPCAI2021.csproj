@@ -69,8 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente.cs" />
+    <Compile Include="data\TPDBInitializer.cs" />
     <Compile Include="data\TPContext.cs" />
     <Compile Include="Direccion.cs" />
+    <Compile Include="Localidad.cs" />
     <Compile Include="OrdenServicio.cs" />
     <Compile Include="Pais.cs" />
     <Compile Include="Paquete.cs" />
