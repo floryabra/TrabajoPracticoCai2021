@@ -42,7 +42,6 @@ namespace TPCAI2021
 
         }
 
-
         public static string mostrarMenu(List<string> items, string titulo = "Seleccione una opción:")
         {
 
@@ -72,22 +71,6 @@ namespace TPCAI2021
             {
                 Console.WriteLine("Opcion inválida");
                 return "Salir";
-            }
-        }
-
-        static void ingresarDatos()
-        {
-            Console.Clear();
-            string opcionSeleccionada = "";
-            while (opcionSeleccionada != "5")
-            {
-                Console.WriteLine("Datos a gestionar:");
-                Console.WriteLine("1) Sucursales");
-                Console.WriteLine("2) Clientes");
-                Console.WriteLine("3) Salir");
-                opcionSeleccionada = Console.ReadLine();
-
-             
             }
         }
 
