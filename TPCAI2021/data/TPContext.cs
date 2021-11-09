@@ -9,12 +9,19 @@ namespace TPCAI2021.data
 {
     class TPContext : DbContext
     {
-        public DbSet<Pais> Paises { get; set; }
-        public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
-        public TPContext() : base()
+        public DbSet<Direccion> Direcciones { get; set; }
+        public DbSet<Localidad> Localidades { get; set; }
+        public DbSet<OrdenServicio> OrdenesServicio { get; set; }
+        public DbSet<Pais> Paises { get; set; }
+        public DbSet<Paquete> Paquetes { get; set; }
+        public DbSet<Provincia> Provincias { get; set; }
+        public DbSet<Sucursal> Sucursales { get; set; }
+        public DbSet<TipoServicio> TipoServicios { get; set; }
+
+        public TPContext() : base("TPDB")
         {
-            Database.SetInitializer<TPContext>(new DropCreateDatabaseIfModelChanges<TPContext>());
+            Database.SetInitializer(new TPDBInitializer());
         }
     }
 }
