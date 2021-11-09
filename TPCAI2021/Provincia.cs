@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPCAI2021.data;
 
 namespace TPCAI2021
 {
@@ -15,29 +16,34 @@ namespace TPCAI2021
         public string Region { get; set; }
         public ICollection<Localidad> Localidades { get; set; }
 
-        public static List<Provincia> listaProvincias()
+        public static Provincia getProvincia(int idProvincia)
         {
+            var ctx = new TPContext();
+            var provincias = ctx.Provincias;
+            Provincia provincia = provincias.Find(idProvincia);
+            return provincia;
+        }
 
-            using (var r = new StreamReader("../../data/provincias_regiones.csv"))
+        public static void listarProvincias(int idRegion = 0)
+        {
+            var ctx = new TPContext();
+            IEnumerable<Provincia> provincias = null;
+
+            if (idRegion == 0)
             {
-                List<Provincia> provincias = new List<Provincia>();
-                string cabeceras = r.ReadLine();
-
-                while (!r.EndOfStream)
-                {
-                        var line = r.ReadLine();
-                        var values = line.Split(';');
-                        int id_provincia = int.Parse(values[0]);
-                        string nombre_provincia = values[1];
-                        int id_region = int.Parse(values[2]);
-                        string nombre_region = values[1];
-                        //provincias.Add(new Provincia(id_provincia, nombre_provincia, id_region, nombre_region));
-                        
-                }
-
-                return provincias;
+                provincias = ctx.Provincias.ToList();
+            }
+            else
+            {
+                provincias = ctx.Provincias.Where(s => s.IdRegion == idRegion)
+                          .ToList();
             }
 
+            Console.WriteLine("id | Provincia | Region");
+            foreach (Provincia prov in provincias)
+            {
+                Console.WriteLine(prov.ProvinciaID+ "|" + prov.Nombre + "|" + prov.Region);
+            }
         }
     }
 }
