@@ -8,16 +8,10 @@ namespace TPCAI2021
 {
     class TipoServicio
     {
-        public string prioridadServicio;
-        public string entregaPaquete;
-        public string retiroPaquete;
-
-        public TipoServicio(string prioridadServicio, string entregaPaquete, string retiroPaquete)
-        {
-            this.prioridadServicio = prioridadServicio;
-            this.entregaPaquete = entregaPaquete;
-            this.retiroPaquete = retiroPaquete;
-        }
+        public int TipoServicioID { get; set; }
+        public string PrioridadServicio { get; set; }
+        public string EntregaPaquete { get; set; }
+        public string RetiroPaquete { get; set; }
 
         public string elegirTipoServicio()
         {
