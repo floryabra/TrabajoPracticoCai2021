@@ -14,7 +14,6 @@ namespace TPCAI2021
         {
             //Console.CursorVisible = false;
             // TODO: Agregar login
-            
             List<string> menuItems = new List<string>()
             {
                 "Realizar solicitud de servicio",
@@ -22,7 +21,6 @@ namespace TPCAI2021
                 "Consultar estado de cuenta",
                 "Gestionar db"
             };
-
             while (true)
             {
                 string opcionSeleccionada = mostrarMenu(menuItems);
@@ -60,7 +58,6 @@ namespace TPCAI2021
 
             Console.WriteLine(indiceMenu + ") Salir");
             Console.WriteLine("--------");
-
             string indiceOpcionSeleccionadaMenu = Console.ReadLine();
             if (int.TryParse(indiceOpcionSeleccionadaMenu, out int opcionSeleccionada))
             {
