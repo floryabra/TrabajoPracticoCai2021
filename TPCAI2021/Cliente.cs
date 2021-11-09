@@ -96,10 +96,6 @@ namespace TPCAI2021
                 {
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("Opción inválida");
-                }
                 Console.ReadKey();
             }
         }
