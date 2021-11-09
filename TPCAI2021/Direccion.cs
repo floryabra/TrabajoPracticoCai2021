@@ -1,31 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TPCAI2021
 {
+    [Table("Direcciones")]
     class Direccion
     {
-        public bool alcanceNacional;
-        public string provincia;
-        public string ciudad;
-        public string calle;
-        public int codigoPostal;
-        public int? piso;
-        public char? depto;
-
-        public Direccion(bool alcanceNacional, string provincia, string ciudad, string calle, int codigoPostal, int? piso, char? depto)
-        {
-            this.alcanceNacional = alcanceNacional;
-            this.provincia = provincia;
-            this.ciudad = ciudad;
-            this.calle = calle;
-            this.codigoPostal = codigoPostal;
-            this.piso = piso;
-            this.depto = depto;
-        }
+        public int DireccionId { get; set; }
+        public bool AlcanceNacional { get; set; }
+        public string Provincia { get; set; }
+        public string Ciudad { get; set; }
+        public string Calle { get; set; }
+        public int CodigoPostal { get; set; }
+        public int? Piso { get; set; }
+        public char? Depto { get; set; }
 
         public string ingresarDireccion()
         {
