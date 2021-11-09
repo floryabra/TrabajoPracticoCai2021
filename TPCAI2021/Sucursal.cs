@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,33 +18,6 @@ namespace TPCAI2021
 
         public int LocalidadID { get; set; }
         public virtual Localidad Localidad { get; set; }
-
-        public static List<Sucursal> listaSucursales(int idProvinciaSolicitada = 0)
-        {
-
-            using (var r = new StreamReader("../../data/sucursales.csv"))
-            {
-                List<Sucursal> sucursales = new List<Sucursal>();
-                string cabeceras = r.ReadLine();
-
-                while (!r.EndOfStream)
-                {
-                    var line = r.ReadLine();
-                    var values = line.Split(';');
-                    int id_provincia = int.Parse(values[0]);
-                    int id_sucursal = int.Parse(values[1]);
-                    string nombre_sucursal = values[2];
-
-                    if (idProvinciaSolicitada != 0 && id_provincia == idProvinciaSolicitada) {
-                        //sucursales.Add(new Sucursal(id_provincia, id_sucursal, nombre_sucursal));
-                    }
-
-                }
-
-                return sucursales;
-            }
-
-        }
 
         public static void agregarSucursal()
         {
@@ -78,23 +52,34 @@ namespace TPCAI2021
         public static void listarSucursales(int idLocalidadSolicitada = 0)
         {
             var ctx = new TPContext();
-            var sucursales = ctx.Sucursales;
+            IEnumerable<Sucursal> sucursales = null;
+
             if (idLocalidadSolicitada == 0)
             {
-                sucursales.Include("Localidad").ToList();
+                sucursales = ctx.Sucursales.Include("Localidad").ToList();
             } else
             {
-                sucursales.Where(s => s.Localidad.LocalidadID == idLocalidadSolicitada)
-                          .Include("Localidad")
+                sucursales = ctx.Sucursales.Where(s => s.LocalidadID == idLocalidadSolicitada)
+                          .Include(s => s.Localidad)
                           .ToList();
             }
             
             Console.WriteLine("id | Sucursal | Localidad");
+            
             foreach (Sucursal sucu in sucursales)
             {
                 Console.WriteLine(sucu.SucursalID + "|" + sucu.Nombre + "|" + sucu.Localidad.Nombre);
             }
         }
+
+        public static Sucursal getSucursal(int idSucursal)
+        {
+            var ctx = new TPContext();
+            var sucursales= ctx.Sucursales;
+            Sucursal sucursal = sucursales.Find(idSucursal);
+            return sucursal;
+        }
+
 
         public static void menuABM()
         {
