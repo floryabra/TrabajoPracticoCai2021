@@ -8,32 +8,20 @@ namespace TPCAI2021
 {
     class OrdenServicio
     {
-        public int nroOrdenServicio { get; set; }
-        public TipoServicio tipoServicio;
-        public Paquete paquete;
-        public string estadoOrden;
-        public Direccion direccionOrigen;
-        public Direccion direccionDestino;
-        public decimal tarifa;
-        public int dniAutorizadoDespacho;
-
-        public OrdenServicio(int nroOrdenServicio, TipoServicio tipoServicio, Paquete paquete, string estadoOrden, Direccion direccionOrigen, Direccion direccionDestino, decimal tarifa, int dniAutorizadoDespacho)
-        {
-            this.nroOrdenServicio = nroOrdenServicio;
-            this.tipoServicio = tipoServicio;
-            this.paquete = paquete;
-            this.estadoOrden = estadoOrden;
-            this.direccionOrigen = direccionOrigen;
-            this.direccionDestino = direccionDestino;
-            this.tarifa = tarifa;
-            this.dniAutorizadoDespacho = dniAutorizadoDespacho;
-        }
-
-        public static string realizarOrdenServicio()
+        public int OrdenServicioID { get; set; }
+        public TipoServicio TipoServicio { get; set; }
+        public ICollection<Paquete> Paquetes { get; set; }
+        public string EstadoOrden { get; set; }
+        public Direccion DireccionOrigen { get; set; }
+        public Direccion DireccionDestino { get; set; }
+        public decimal Tarifa { get; set; }
+        public int DniAutorizadoDespacho { get; set; }
+        
+        public static void realizarOrdenServicio()
         {
             Console.Clear();
             Console.WriteLine("Nueva orden de servicio");
-
+            /*
             // 1 - Selección de la provincia de origen
             string idProvinciaSeleccionadaOrigen = mostrarProvincias();
             if (idProvinciaSeleccionadaOrigen == "volver")
@@ -132,8 +120,8 @@ namespace TPCAI2021
 
             // 7 - Cálculo de tarifa
             return "test realizarOrdenServicio";
+            */
         }
-
         private static string mostrarProvincias()
         {
             Console.WriteLine("Seleccione la provincia de origen");
@@ -141,7 +129,7 @@ namespace TPCAI2021
 
             foreach (Provincia prov in provincias)
             {
-                Console.WriteLine(prov.idProvincia + ")" + prov.nombreProvincia);
+                //Console.WriteLine(prov.idProvincia + ")" + prov.nombreProvincia);
             }
             Console.WriteLine("S) Salir");
 
@@ -162,7 +150,7 @@ namespace TPCAI2021
 
             foreach (Sucursal sucu in sucursales)
             {
-                Console.WriteLine(sucu.SucursalId + ")" + sucu.Nombre);
+                //Console.WriteLine(sucu.SucursalId + ")" + sucu.Nombre);
             }
             Console.WriteLine("S) Salir");
 
