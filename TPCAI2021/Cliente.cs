@@ -12,18 +12,17 @@ namespace TPCAI2021
         public int ClienteID{ get; set; }
         public int NroClienteCorporativo { get; set; }
         public string Nombre { get; set; }
-        //public CuentaCorriente cuenta { get; set; }
         public int NroCuentaCorriente { get; set; }
         public decimal Saldo { get; set; }
         public string Facturacion { get; set; }
-
         public string ListaPersonalAutorizado { get; set; }
 
-        public static void buscarCliente(int idCliente)
+        public static Cliente buscarCliente(int idCliente)
         {
             var ctx = new TPContext();
-            var clientes = ctx.Clientes.Find(idCliente);
-            Console.WriteLine(clientes.ClienteID + "|" + clientes.Nombre);
+            var cliente = ctx.Clientes.Find(idCliente);
+            //Console.WriteLine(cliente.ClienteID + "|" + cliente.Nombre);
+            return cliente;
         }
 
         public static void ingresarCliente()

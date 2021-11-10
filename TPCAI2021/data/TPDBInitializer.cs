@@ -75,23 +75,36 @@ namespace TPCAI2021.data
 
             // Seed paises
 
-            IList<Pais> defaultPaises = new List<Pais>();
-            defaultPaises.Add(new Pais() { PaisID = 1, Nombre = "Brasil", RegionID = 1, Region = "Paises limítrofes" });
-            defaultPaises.Add(new Pais() { PaisID = 2, Nombre = "Chile", RegionID = 1, Region = "Paises limítrofes" });
-            defaultPaises.Add(new Pais() { PaisID = 3, Nombre = "Uruguay", RegionID = 1, Region = "Paises limítrofes" });
-            defaultPaises.Add(new Pais() { PaisID = 4, Nombre = "China", RegionID = 5, Region = "Asia" });
-            defaultPaises.Add(new Pais() { PaisID = 5, Nombre = "Japón", RegionID = 5, Region = "Asia" });
-            defaultPaises.Add(new Pais() { PaisID = 6, Nombre = "España", RegionID = 4, Region = "Europa" });
-            defaultPaises.Add(new Pais() { PaisID = 7, Nombre = "Francia", RegionID = 4, Region = "Europa" });
-            defaultPaises.Add(new Pais() { PaisID = 8, Nombre = "Inglaterra", RegionID = 4, Region = "Europa" });
-            defaultPaises.Add(new Pais() { PaisID = 9, Nombre = "USA", RegionID = 8, Region = "América del Norte" });
-            defaultPaises.Add(new Pais() { PaisID = 10, Nombre = "Mexico", RegionID = 8, Region = "América del Norte" });
-            defaultPaises.Add(new Pais() { PaisID = 11, Nombre = "Canadá", RegionID = 7, Region = "América del Norte" });
-            defaultPaises.Add(new Pais() { PaisID = 12, Nombre = "Colombia", RegionID = 4, Region = "Resto de América Latina" });
-            defaultPaises.Add(new Pais() { PaisID = 13, Nombre = "Venezuela", RegionID = 7, Region = "Resto de América Latina" });
-            defaultPaises.Add(new Pais() { PaisID = 14, Nombre = "Nicaragua", RegionID = 6, Region = "Resto de América Latina" });
+                IList<Pais> defaultPaises = new List<Pais>();
+                defaultPaises.Add(new Pais() { PaisID = 1, Nombre = "Brasil", RegionID = 1, Region = "Paises limítrofes" });
+                defaultPaises.Add(new Pais() { PaisID = 2, Nombre = "Chile", RegionID = 1, Region = "Paises limítrofes" });
+                defaultPaises.Add(new Pais() { PaisID = 3, Nombre = "Uruguay", RegionID = 1, Region = "Paises limítrofes" });
+                defaultPaises.Add(new Pais() { PaisID = 4, Nombre = "China", RegionID = 5, Region = "Asia" });
+                defaultPaises.Add(new Pais() { PaisID = 5, Nombre = "Japón", RegionID = 5, Region = "Asia" });
+                defaultPaises.Add(new Pais() { PaisID = 6, Nombre = "España", RegionID = 4, Region = "Europa" });
+                defaultPaises.Add(new Pais() { PaisID = 7, Nombre = "Francia", RegionID = 4, Region = "Europa" });
+                defaultPaises.Add(new Pais() { PaisID = 8, Nombre = "Inglaterra", RegionID = 4, Region = "Europa" });
+                defaultPaises.Add(new Pais() { PaisID = 9, Nombre = "USA", RegionID = 8, Region = "América del Norte" });
+                defaultPaises.Add(new Pais() { PaisID = 10, Nombre = "Mexico", RegionID = 8, Region = "América del Norte" });
+                defaultPaises.Add(new Pais() { PaisID = 11, Nombre = "Canadá", RegionID = 7, Region = "América del Norte" });
+                defaultPaises.Add(new Pais() { PaisID = 12, Nombre = "Colombia", RegionID = 4, Region = "Resto de América Latina" });
+                defaultPaises.Add(new Pais() { PaisID = 13, Nombre = "Venezuela", RegionID = 7, Region = "Resto de América Latina" });
+                defaultPaises.Add(new Pais() { PaisID = 14, Nombre = "Nicaragua", RegionID = 6, Region = "Resto de América Latina" });
 
-            context.Paises.AddRange(defaultPaises);
+                context.Paises.AddRange(defaultPaises);
+
+            // Seed clientes
+                IList<Cliente> defaultClientes = new List<Cliente>();
+                defaultClientes.Add(new Cliente() {
+                    ClienteID = 1,
+                    NroClienteCorporativo = 00889222,
+                    Nombre = "TestCliente",
+                    NroCuentaCorriente = 1337, 
+                    Saldo = 30,
+                    Facturacion = "1",
+                    ListaPersonalAutorizado = "1123,123456"
+                });
+                context.Clientes.AddRange(defaultClientes);
             /*Console.WriteLine("id | Sucursal | Localidad");
             foreach (Sucursal sucu in defaultSucursales)
             {

@@ -13,7 +13,7 @@ namespace TPCAI2021
         public decimal Peso { get; set; }
         public string TipoPaquete { get; set; }
 
-        public static void ingresarPaquete()
+        public static Paquete ingresarPaquete()
         {
             string tipoPaquete = "Sobre";
             Console.WriteLine("Ingrese el peso del paquete (en kg):");
@@ -35,6 +35,7 @@ namespace TPCAI2021
             ctx.Paquetes.Add(paquete);
             ctx.SaveChanges();
             Console.WriteLine("Paquete agregado");
+            return paquete;
         }
     }
 }
