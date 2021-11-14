@@ -13,11 +13,13 @@ namespace TPCAI2021
         public TipoServicio TipoServicio { get; set; }
         public ICollection<Paquete> Paquetes { get; set; }
         public string EstadoOrden { get; set; }
+        public double Tarifa { get; set; }
+        public int DniAutorizadoDespacho { get; set; }
         public Direccion DireccionOrigen { get; set; }
         public Direccion DireccionDestino { get; set; }
-        public decimal Tarifa { get; set; }
-        public int DniAutorizadoDespacho { get; set; }
-        
+        public Sucursal SucursalOrigen { get; set; }
+        public Sucursal SucursalDestino { get; set; }
+
         public static void realizarOrdenServicio(int idCliente)
         {
             int idLocalidadOrigen = 0;
@@ -28,12 +30,19 @@ namespace TPCAI2021
             Provincia provinciaOrigen = null;
             Provincia provinciaDestino = null;
 
+            Direccion direccionOrigen = null;
+            Direccion direccionDestino = null;
+
+            Sucursal sucursalOrigen = null;
+            Sucursal sucursalDestino = null;
+
+            int idPaisDestino = 0;
+
             Console.Clear();
             Console.WriteLine("Nueva orden de servicio");
 
             // 1 - Selección de la provincia de origen
-
-            Console.WriteLine("-----------");
+            Console.WriteLine("***********");
             Console.WriteLine("Seleccione la provincia de origen:");
             Provincia.listarProvincias();
 
@@ -42,11 +51,14 @@ namespace TPCAI2021
 
 
             // 2 - Selección de sucursal o domicilio de origen
+            Console.WriteLine("***********");
             Console.WriteLine("¿Desea enviar el paquete desde su domicilio o desde una sucursal?");
             Console.WriteLine("1) Sucursal");
             Console.WriteLine("2) Domicilio");
+            Console.WriteLine("");
             string origenEnvio = Console.ReadLine();
 
+            Console.WriteLine("");
             Console.WriteLine("Seleccione la localidad de origen:");
             Localidad.listarLocalidades(idProvinciaOrigen);
             idLocalidadOrigen = int.Parse(Console.ReadLine());
@@ -54,32 +66,37 @@ namespace TPCAI2021
 
             if (origenEnvio == "1")
             {
+                Console.WriteLine("");
                 Console.WriteLine("Seleccione la sucursal de origen:");
                 Sucursal.listarSucursales(idLocalidadOrigen);
 
                 int idSucursalOrigen = int.Parse(Console.ReadLine());
-                Sucursal sucursalOrigen = Sucursal.getSucursal(idSucursalOrigen);
+                sucursalOrigen = Sucursal.getSucursal(idSucursalOrigen);
             }
             else if (origenEnvio == "2")
             {
-                Direccion direccionOrigen = Direccion.ingresarDireccion(idLocalidad: idLocalidadOrigen);
+                direccionOrigen = Direccion.ingresarDireccion(idLocalidad: idLocalidadOrigen);
             }
 
             // 3 - Destino nacional o internacional
+            Console.WriteLine("***********");
             Console.WriteLine("¿El destino es nacional?");
             Console.WriteLine("1) Si");
             Console.WriteLine("2) No");
+            Console.WriteLine("");
             string destinoNacional = Console.ReadLine();
             
             if (destinoNacional == "1")
             {
 
+                Console.WriteLine("");
                 Console.WriteLine("Seleccione la provincia de destino:");
                 Provincia.listarProvincias();
 
                 idProvinciaDestino = int.Parse(Console.ReadLine());
                 provinciaDestino = Provincia.getProvincia(idProvinciaDestino);
 
+                Console.WriteLine("");
                 Console.WriteLine("Seleccione la localidad de destino:");
                 Localidad.listarLocalidades(idProvinciaDestino);
                 idLocalidadDestino = int.Parse(Console.ReadLine());
@@ -88,54 +105,67 @@ namespace TPCAI2021
             }
             else if (destinoNacional == "2")
             {
+                Console.WriteLine("");
                 Console.WriteLine("Seleccione la región de destino");
                 Console.WriteLine("1) Países limítrofes");
                 Console.WriteLine("2) Resto de América Latina");
                 Console.WriteLine("3) América del Norte");
                 Console.WriteLine("4) Europa");
                 Console.WriteLine("5) Asia");
+                Console.WriteLine("");
 
                 int regionDestino = int.Parse(Console.ReadLine());
+                Console.WriteLine("");
                 Console.WriteLine("Seleccione el pais de destino:");
                 Pais.listarPaises(regionDestino);
-                int idPaisDestino = int.Parse(Console.ReadLine());
+                idPaisDestino = int.Parse(Console.ReadLine());
                 Pais paisDestino = Pais.getPais(idPaisDestino);
             }
 
             // 4 - Entrega en sucursal o particular
+            Console.WriteLine("***********");
             Console.WriteLine("¿La entrega es en sucursal o domicilio?");
             Console.WriteLine("1) Sucursal");
             Console.WriteLine("2) Domicilio");
+            Console.WriteLine("");
             string tipoEntrega = Console.ReadLine();
             if (tipoEntrega == "1")
             {
 
                 Console.WriteLine("Seleccione la sucursal de destino:");
-                Sucursal.listarSucursales(idLocalidadDestino);
+                if (destinoNacional == "1")
+                {
+                    Sucursal.listarSucursales(idLocalidadDestino);
+                } else if (destinoNacional == "2")
+                {
+                    Sucursal.listarSucursales(0, idPaisDestino);
+                }
+                
 
                 int idSucursalDestino = int.Parse(Console.ReadLine());
-                Sucursal sucursalDestino = Sucursal.getSucursal(idSucursalDestino);
+                sucursalDestino = Sucursal.getSucursal(idSucursalDestino);
 
             }
             else if (tipoEntrega == "2")
             {
                 if (destinoNacional == "2")
                 {
-                    Direccion direccionDestino = Direccion.ingresarDireccion(alcance: false, idLocalidad: idLocalidadDestino);
+                    direccionDestino = Direccion.ingresarDireccion(alcance: false, idLocalidad: idLocalidadDestino);
                 } else
                 {
-                    Direccion direccionDestino = Direccion.ingresarDireccion(idLocalidad: idLocalidadDestino);
+                    direccionDestino = Direccion.ingresarDireccion(idLocalidad: idLocalidadDestino);
                 }
                 
             }
 
             // 5 - Entrega urgente
-            Console.WriteLine("¿Es entrega urgente?");
-            Console.WriteLine("1) Si (recargo del 10% con tope a $500 en el precio fina)");
-            Console.WriteLine("2) No");
+            Console.WriteLine("***********");
+            Console.WriteLine("¿Es entrega urgente (recargo del 10% con tope a $500 en el precio fina, se entrega en 48hs)? S/N");
+            Console.WriteLine("");
             string urgencia = Console.ReadLine();
 
             // 6 - Detalles del paquete
+            Console.WriteLine("***********");
             List<Paquete> paquetes = new List<Paquete>();
             while (true)
             {
@@ -150,6 +180,7 @@ namespace TPCAI2021
             }
 
             // 7 - Cálculo de tarifa
+            Console.WriteLine("***********");
             double tarifa = 0;
             int[,] arrayTarifas = new int[,] { { 50, 100, 150, 200, 250 }, { 100, 150, 200, 250, 300 }, { 150, 200, 250, 300, 350 }, { 200, 250, 300, 350, 400 } };
             int alcanceEntrega;
@@ -195,7 +226,7 @@ namespace TPCAI2021
                 tarifa += arrayTarifas[categoriaPaquete, alcanceEntrega];
             }
 
-            if (urgencia == "1")
+            if (urgencia.ToLower() == "s")
             {
                 double recargo = tarifa * 0.1;
                 if (recargo > 500)
@@ -209,62 +240,113 @@ namespace TPCAI2021
             Console.WriteLine("El costo del servicio es de $" + tarifa);
 
             // 8 - Confirmar servicio
-            Console.WriteLine("¿Desea confirmar el servicio?");
-            Console.WriteLine("1) Si");
-            Console.WriteLine("2) No");
-            if (Console.ReadLine() == "2")
+            Console.WriteLine("***********");
+            Console.WriteLine("¿Desea confirmar el servicio? S/N");
+            if (Console.ReadLine().ToLower() == "n")
             {
                 return;
             }
 
             // 9 - Agregar DNI autorizado a despachar
-            Console.WriteLine("¿Desea agregar el DNI del autorizado a despachar?");
-            Console.WriteLine("1) Si");
-            Console.WriteLine("2) No");
-            if (Console.ReadLine() == "1")
+            Console.WriteLine("***********");
+            Console.WriteLine("¿Desea agregar el DNI del autorizado a despachar? S/N");
+            int dniAutorizadoDespacho = 0;
+            
+            if (Console.ReadLine().ToLower() == "s")
             {
                 while (true)
                 {
                     Console.WriteLine("Ingrese el DNI:");
-                    string dniAutorizado = Console.ReadLine();
+                    dniAutorizadoDespacho = int.Parse(Console.ReadLine());
 
-                    Console.WriteLine("¿Desea agrgar otro dni?");
-                    Console.WriteLine("1) Si");
-                    Console.WriteLine("2) No");
-                    if (Console.ReadLine() == "2")
+                    var ctx = new TPContext();
+                    var cliente = ctx.Clientes.Find(idCliente);
+                    bool dniExisteEnAutorizadosCliente = cliente.ListaPersonalAutorizado.Contains(dniAutorizadoDespacho);
+                    if (dniExisteEnAutorizadosCliente)
                     {
                         break;
+                    } else
+                    {
+                        Console.WriteLine("El DNI no existe en la lista de los autorizados por el cliente");
                     }
                 }
+                
             }
 
-            aprobarOrden();
+            TipoServicio tipoServicio = new TipoServicio();
+
+            string estadoOrden = "Orden de servicio iniciada";
+
+            aprobarOrden(tipoServicio, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
 
         }
 
-        public string conocerEstadoOrdenServicio()
-        {
-            return "test conocerEstadoOrdenServicio";
-        }
-
-        public string validarNumeroOrden()
-        {
-            return "test validarNumeroOrden";
-        }
-
-        public string mostrarOrden()
-        {
-            return "test mostrarOrden";
-        }
-
-        public static void aprobarOrden()
+        public OrdenServicio conocerEstadoOrdenServicio(int idOrden)
         {
             var ctx = new TPContext();
+            var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
+            Console.WriteLine(ordenServicio.EstadoOrden);
+            return ordenServicio;
+        }
 
-            var ordenServicio = new OrdenServicio() {  }; // TO DO
+        public string validarNumeroOrden(int idOrden)
+        {
+            var ctx = new TPContext();
+            var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
+            if (ordenServicio == null)
+            {
+                return "No existe la orden de servicio";
+            } else
+            {
+                return "ok";
+            }
+        }
+
+        public OrdenServicio mostrarOrden(int idOrden)
+        {
+            var ctx = new TPContext();
+            var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
+            Console.WriteLine("Origen | Destino | Estado de Orden | Tarifa | Prioridad | Retiro | DNI autorizado");
+            Console.WriteLine(
+                ordenServicio.DireccionOrigen.Calle + ordenServicio.DireccionOrigen.Altura + ordenServicio.SucursalOrigen.Nombre + "|" + 
+                ordenServicio.DireccionDestino.Calle + ordenServicio.DireccionDestino.Altura + ordenServicio.SucursalDestino.Nombre + "|" + 
+                ordenServicio.EstadoOrden + "|" +
+                ordenServicio.Tarifa + "|" +
+                ordenServicio.TipoServicio.PrioridadServicio + "|" +
+                ordenServicio.TipoServicio.RetiroPaquete + "|" +
+                ordenServicio.DniAutorizadoDespacho
+                );
+            return ordenServicio;
+        }
+
+        public static void aprobarOrden(
+            TipoServicio tipoServicio, 
+            List<Paquete> paquetes, 
+            double tarifa, 
+            int dniAutorizadoDespacho,
+            Direccion direccionOrigen,
+            Direccion direccionDestino,
+            Sucursal sucursalOrigen,
+            Sucursal sucursalDestino,
+            string estadoOrden = "Orden de servicio iniciada")
+        {
+            var ctx = new TPContext();
+            var ordenServicio = new OrdenServicio() { 
+                TipoServicio = tipoServicio, 
+                Paquetes = paquetes,
+                Tarifa = tarifa,
+                DniAutorizadoDespacho = dniAutorizadoDespacho,
+                DireccionOrigen = direccionOrigen,
+                DireccionDestino = direccionDestino,
+                SucursalOrigen = sucursalOrigen,
+                SucursalDestino = sucursalDestino,
+                EstadoOrden = estadoOrden,
+            };
             ctx.OrdenesServicio.Add(ordenServicio);
             ctx.SaveChanges();
+            Console.WriteLine("***********");
             Console.WriteLine("Orden de servicio generada");
+            Console.WriteLine("***********");
         }
     }
 }
