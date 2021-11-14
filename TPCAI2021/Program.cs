@@ -45,6 +45,7 @@ namespace TPCAI2021
                 {
                     Environment.Exit(0);
                 }
+                Console.WriteLine("Presione una tecla para continuar...");
                 Console.ReadKey();
             }
 
