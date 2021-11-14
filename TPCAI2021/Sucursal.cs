@@ -16,19 +16,38 @@ namespace TPCAI2021
         public int SucursalID { get; set; }
         public string Nombre { get; set; }
 
-        public int LocalidadID { get; set; }
+        public int? LocalidadID { get; set; }
         public virtual Localidad Localidad { get; set; }
+
+        public int? PaisID { get; set; }
+        public virtual Pais Pais { get; set; }
 
         public static void agregarSucursal()
         {
             var ctx = new TPContext();
             Console.WriteLine("Ingrese el nombre de la nueva sucursal:");
             string nombreSucursal = Console.ReadLine();
-            Console.WriteLine("Ingrese el código de localidad de la nueva sucursal:");
-            int idLocalidad = int.Parse(Console.ReadLine());
-            Localidad localidad = ctx.Localidades.Find(idLocalidad);
+            Localidad localidad = null;
+            Pais pais = null;
 
-            var sucursal = new Sucursal() { Nombre = nombreSucursal, Localidad = localidad };
+            Console.WriteLine("¿La sucursal es nacional? S/N");
+            string tipoSucursal = Console.ReadLine();
+
+            if (tipoSucursal == "s")
+            {
+                Console.WriteLine("Ingrese el código de localidad de la nueva sucursal:");
+                int idLocalidad = int.Parse(Console.ReadLine());
+                localidad = ctx.Localidades.Find(idLocalidad);
+            } else
+            {
+                Console.WriteLine("Ingrese el código del pais:");
+                int idPais = int.Parse(Console.ReadLine());
+                pais = ctx.Paises.Find(idPais);
+            }
+
+            
+
+            var sucursal = new Sucursal() { Nombre = nombreSucursal, Localidad = localidad, Pais = pais};
             ctx.Sucursales.Add(sucursal);
             ctx.SaveChanges();
             Console.WriteLine("Sucursal agregada.");
@@ -49,26 +68,41 @@ namespace TPCAI2021
             Console.WriteLine("Sucursal eliminada");
         }
 
-        public static void listarSucursales(int idLocalidadSolicitada = 0)
+        public static void listarSucursales(int idLocalidadSolicitada = 0, int idPaisSolicitado = 0)
         {
             var ctx = new TPContext();
             IEnumerable<Sucursal> sucursales = null;
 
-            if (idLocalidadSolicitada == 0)
+            if (idLocalidadSolicitada == 0 && idPaisSolicitado == 0)
             {
-                sucursales = ctx.Sucursales.Include("Localidad").ToList();
-            } else
+                sucursales = ctx.Sucursales.Include("Localidad").Include("Pais").ToList();
+            } else if (idLocalidadSolicitada != 0)
             {
                 sucursales = ctx.Sucursales.Where(s => s.LocalidadID == idLocalidadSolicitada)
                           .Include(s => s.Localidad)
                           .ToList();
+            } else if (idPaisSolicitado != 0)
+            {
+                sucursales = ctx.Sucursales.Where(s => s.PaisID == idPaisSolicitado)
+                          .Include(s => s.Pais)
+                          .ToList();
             }
-            
-            Console.WriteLine("id | Sucursal | Localidad");
-            
+
+            Console.WriteLine("-----------");
+            Console.WriteLine("id | Sucursal | Ubicacion");
+            Console.WriteLine("-----------");
+
             foreach (Sucursal sucu in sucursales)
             {
-                Console.WriteLine(sucu.SucursalID + "|" + sucu.Nombre + "|" + sucu.Localidad.Nombre);
+                string ubicacion = "";
+                if (sucu.Localidad == null)
+                {
+                    ubicacion = sucu.Pais.Region;
+                } else if (sucu.Pais == null)
+                {
+                    ubicacion = sucu.Localidad.Nombre;
+                }
+                Console.WriteLine(sucu.SucursalID + " | " + sucu.Nombre + " | " + ubicacion);
             }
         }
 
