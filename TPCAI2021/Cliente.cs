@@ -15,7 +15,7 @@ namespace TPCAI2021
         public int NroCuentaCorriente { get; set; }
         public decimal Saldo { get; set; }
         public string Facturacion { get; set; }
-        public string ListaPersonalAutorizado { get; set; }
+        public List<int> ListaPersonalAutorizado { get; set; }
 
         public static Cliente buscarCliente(int idCliente)
         {
