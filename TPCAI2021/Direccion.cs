@@ -11,8 +11,6 @@ namespace TPCAI2021
     [Table("Direcciones")]
     class Direccion
     {
-        private string piso;
-
         public int DireccionId { get; set; }
         public bool AlcanceNacional { get; set; }
         public string Calle { get; set; }
