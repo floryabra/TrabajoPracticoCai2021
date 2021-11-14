@@ -66,8 +66,8 @@ namespace TPCAI2021.data
                     Localidad localidad = defaultLocalidades[i];
                     for (int j = 0; j < 3; j++)
                     {
-                        string nombre = "Sucursal " + idSucursal.ToString() + " de la localidad de " + localidad.Nombre;
-                        defaultSucursales.Add(new Sucursal() {SucursalID = idSucursal, Nombre = nombre, Localidad = localidad });
+                        string nombre = "Sucursal " + idSucursal.ToString() + " de la " + localidad.Nombre;
+                        defaultSucursales.Add(new Sucursal() {SucursalID = idSucursal, Nombre = nombre, Localidad = localidad, Pais = null });
                         idSucursal++;
                     }
                 }
@@ -75,7 +75,7 @@ namespace TPCAI2021.data
 
             // Seed paises
 
-                IList<Pais> defaultPaises = new List<Pais>();
+            IList<Pais> defaultPaises = new List<Pais>();
                 defaultPaises.Add(new Pais() { PaisID = 1, Nombre = "Brasil", RegionID = 1, Region = "Paises limítrofes" });
                 defaultPaises.Add(new Pais() { PaisID = 2, Nombre = "Chile", RegionID = 1, Region = "Paises limítrofes" });
                 defaultPaises.Add(new Pais() { PaisID = 3, Nombre = "Uruguay", RegionID = 1, Region = "Paises limítrofes" });
@@ -84,17 +84,30 @@ namespace TPCAI2021.data
                 defaultPaises.Add(new Pais() { PaisID = 6, Nombre = "España", RegionID = 4, Region = "Europa" });
                 defaultPaises.Add(new Pais() { PaisID = 7, Nombre = "Francia", RegionID = 4, Region = "Europa" });
                 defaultPaises.Add(new Pais() { PaisID = 8, Nombre = "Inglaterra", RegionID = 4, Region = "Europa" });
-                defaultPaises.Add(new Pais() { PaisID = 9, Nombre = "USA", RegionID = 8, Region = "América del Norte" });
-                defaultPaises.Add(new Pais() { PaisID = 10, Nombre = "Mexico", RegionID = 8, Region = "América del Norte" });
-                defaultPaises.Add(new Pais() { PaisID = 11, Nombre = "Canadá", RegionID = 7, Region = "América del Norte" });
-                defaultPaises.Add(new Pais() { PaisID = 12, Nombre = "Colombia", RegionID = 4, Region = "Resto de América Latina" });
-                defaultPaises.Add(new Pais() { PaisID = 13, Nombre = "Venezuela", RegionID = 7, Region = "Resto de América Latina" });
-                defaultPaises.Add(new Pais() { PaisID = 14, Nombre = "Nicaragua", RegionID = 6, Region = "Resto de América Latina" });
+                defaultPaises.Add(new Pais() { PaisID = 9, Nombre = "USA", RegionID = 3, Region = "América del Norte" });
+                defaultPaises.Add(new Pais() { PaisID = 10, Nombre = "Mexico", RegionID = 3, Region = "América del Norte" });
+                defaultPaises.Add(new Pais() { PaisID = 11, Nombre = "Canadá", RegionID = 3, Region = "América del Norte" });
+                defaultPaises.Add(new Pais() { PaisID = 12, Nombre = "Colombia", RegionID = 2, Region = "Resto de América Latina" });
+                defaultPaises.Add(new Pais() { PaisID = 13, Nombre = "Venezuela", RegionID = 2, Region = "Resto de América Latina" });
+                defaultPaises.Add(new Pais() { PaisID = 14, Nombre = "Nicaragua", RegionID = 2, Region = "Resto de América Latina" });
 
                 context.Paises.AddRange(defaultPaises);
 
+                // Sucursales por pais
+                IList<Sucursal> sucursalesPais = new List<Sucursal>();
+                int idSucursalPais = defaultSucursales.Last().SucursalID + 1;
+                for (int i = 0; i < defaultPaises.Count; i++)
+                {
+                    Pais pais = defaultPaises[i];
+                    string nombre = "Sucursal de " + pais.Nombre;
+                    sucursalesPais.Add(new Sucursal() { SucursalID = idSucursalPais, Nombre = nombre, Localidad = null, Pais = pais});
+                    idSucursalPais++;
+                    
+                }
+                context.Sucursales.AddRange(sucursalesPais);
+
             // Seed clientes
-                IList<Cliente> defaultClientes = new List<Cliente>();
+            IList<Cliente> defaultClientes = new List<Cliente>();
                 defaultClientes.Add(new Cliente() {
                     ClienteID = 1,
                     NroClienteCorporativo = 00889222,
@@ -102,7 +115,7 @@ namespace TPCAI2021.data
                     NroCuentaCorriente = 1337, 
                     Saldo = 30,
                     Facturacion = "1",
-                    ListaPersonalAutorizado = "1123,123456"
+                    ListaPersonalAutorizado = new List<int> { 123, 124, 125 }
                 });
                 context.Clientes.AddRange(defaultClientes);
             /*Console.WriteLine("id | Sucursal | Localidad");
