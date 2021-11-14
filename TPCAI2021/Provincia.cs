@@ -14,6 +14,8 @@ namespace TPCAI2021
         public string Nombre { get; set; }
         public int IdRegion { get; set; }
         public string Region { get; set; }
+
+
         public ICollection<Localidad> Localidades { get; set; }
 
         public static Provincia getProvincia(int idProvincia)
@@ -38,11 +40,12 @@ namespace TPCAI2021
                 provincias = ctx.Provincias.Where(s => s.IdRegion == idRegion)
                           .ToList();
             }
-
+            Console.WriteLine("-----------");
             Console.WriteLine("id | Provincia | Region");
+            Console.WriteLine("-----------");
             foreach (Provincia prov in provincias)
             {
-                Console.WriteLine(prov.ProvinciaID+ "|" + prov.Nombre + "|" + prov.Region);
+                Console.WriteLine(prov.ProvinciaID+ " | " + prov.Nombre + " | " + prov.Region);
             }
         }
     }
