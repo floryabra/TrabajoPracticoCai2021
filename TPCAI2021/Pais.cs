@@ -13,6 +13,8 @@ namespace TPCAI2021
         public string Nombre { get; set; }
         public int RegionID { get; set; }
         public string Region { get; set; }
+
+
         public static Pais getPais(int idPais)
         {
             var ctx = new TPContext();
@@ -39,7 +41,7 @@ namespace TPCAI2021
             Console.WriteLine("id | Pais | Region");
             foreach (Pais pais in paises)
             {
-                Console.WriteLine(pais.PaisID + "|" + pais.Nombre + "|" + pais.Region);
+                Console.WriteLine(pais.PaisID + " | " + pais.Nombre + " | " + pais.Region);
             }
         }
     }
