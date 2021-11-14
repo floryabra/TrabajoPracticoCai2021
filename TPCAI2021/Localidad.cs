@@ -44,10 +44,12 @@ namespace TPCAI2021
                           .ToList();
             }
 
+            Console.WriteLine("-----------");
             Console.WriteLine("id | Localidad | Provincia");
+            Console.WriteLine("-----------");
             foreach (Localidad loc in localidades)
             {
-                Console.WriteLine(loc.LocalidadID + "|" + loc.Nombre + "|" + loc.Provincia.Nombre);
+                Console.WriteLine(loc.LocalidadID + " | " + loc.Nombre + " | " + loc.Provincia.Nombre);
             }
         }
     }
