@@ -28,7 +28,7 @@ namespace TPCAI2021
             return localidad;
         }
 
-        public static void listarLocalidades(int idProvinciaSeleccionada = 0)
+        public static void listarLocalidadesPorProvincia(int idProvinciaSeleccionada = 0)
         {
             var ctx = new TPContext();
             IEnumerable<Localidad> localidades = null;
