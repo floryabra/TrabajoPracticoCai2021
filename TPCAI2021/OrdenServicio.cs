@@ -42,27 +42,28 @@ namespace TPCAI2021
             Console.WriteLine("Nueva orden de servicio");
 
             // 1 - Selección de la provincia de origen
-            Console.WriteLine("***********");
+            Console.WriteLine("Información correspondiente a la dirección de origen:");
             Console.WriteLine("Seleccione la provincia de origen:");
             Provincia.listarProvincias();
 
             idProvinciaOrigen = int.Parse(Console.ReadLine());
             provinciaOrigen = Provincia.getProvincia(idProvinciaOrigen);
-
-
-            // 2 - Selección de sucursal o domicilio de origen
-            Console.WriteLine("***********");
-            Console.WriteLine("¿Desea enviar el paquete desde su domicilio o desde una sucursal?");
-            Console.WriteLine("1) Sucursal");
-            Console.WriteLine("2) Domicilio");
-            Console.WriteLine("");
-            string origenEnvio = Console.ReadLine();
-
+//Primero localidad y despues tipo de servicio
             Console.WriteLine("");
             Console.WriteLine("Seleccione la localidad de origen:");
             Localidad.listarLocalidades(idProvinciaOrigen);
             idLocalidadOrigen = int.Parse(Console.ReadLine());
             Localidad localidadOrigen = Localidad.getLocalidad(idLocalidadOrigen);
+            
+            // 2 - Selección de sucursal o domicilio de origen
+            Console.WriteLine("***********");
+            Console.WriteLine("El retiro del paquete será:");
+            Console.WriteLine("1) En Sucursal");
+            Console.WriteLine("2) En puerta");
+            Console.WriteLine("");
+            string origenEnvio = Console.ReadLine();
+
+            
 
             if (origenEnvio == "1")
             {
@@ -80,9 +81,9 @@ namespace TPCAI2021
 
             // 3 - Destino nacional o internacional
             Console.WriteLine("***********");
-            Console.WriteLine("¿El destino es nacional?");
-            Console.WriteLine("1) Si");
-            Console.WriteLine("2) No");
+            Console.WriteLine("El envío del paquete será: ");
+            Console.WriteLine("1) Nacional");
+            Console.WriteLine("2) Internacional");
             Console.WriteLine("");
             string destinoNacional = Console.ReadLine();
             
@@ -102,7 +103,7 @@ namespace TPCAI2021
                 idLocalidadDestino = int.Parse(Console.ReadLine());
                 Localidad localidadDestino = Localidad.getLocalidad(idLocalidadDestino);
 
-            }
+            } //ESTO NO IRIA, LE PIDO EL PAIS E INFIERO LA REGION
             else if (destinoNacional == "2")
             {
                 Console.WriteLine("");
@@ -124,9 +125,9 @@ namespace TPCAI2021
 
             // 4 - Entrega en sucursal o particular
             Console.WriteLine("***********");
-            Console.WriteLine("¿La entrega es en sucursal o domicilio?");
-            Console.WriteLine("1) Sucursal");
-            Console.WriteLine("2) Domicilio");
+            Console.WriteLine("La entrega del paquete será:");
+            Console.WriteLine("1) En Sucursal");
+            Console.WriteLine("2) En Puerta");
             Console.WriteLine("");
             string tipoEntrega = Console.ReadLine();
             if (tipoEntrega == "1")
@@ -160,7 +161,7 @@ namespace TPCAI2021
 
             // 5 - Entrega urgente
             Console.WriteLine("***********");
-            Console.WriteLine("¿Es entrega urgente (recargo del 10% con tope a $500 en el precio fina, se entrega en 48hs)? S/N");
+            Console.WriteLine("¿El tipo de servicio que desea realizar, es urgente?  (Se entrega en 48hs, recargo del 10%). Ingrese S o N.");
             Console.WriteLine("");
             string urgencia = Console.ReadLine();
 
@@ -170,7 +171,7 @@ namespace TPCAI2021
             while (true)
             {
                 paquetes.Add(Paquete.ingresarPaquete());
-                Console.WriteLine("¿Desea agrgar otro paquete?");
+                Console.WriteLine("¿Desea agregar otro paquete? S/N"); //INGRESAR S O N, NO 1 O 2
                 Console.WriteLine("1) Si");
                 Console.WriteLine("2) No");
                 if (Console.ReadLine() == "2")
@@ -237,7 +238,7 @@ namespace TPCAI2021
                 tarifa += recargo;
             }
 
-            Console.WriteLine("El costo del servicio es de $" + tarifa);
+            Console.WriteLine("Tarifa:" + tarifa);
 
             // 8 - Confirmar servicio
             Console.WriteLine("***********");
@@ -249,14 +250,14 @@ namespace TPCAI2021
 
             // 9 - Agregar DNI autorizado a despachar
             Console.WriteLine("***********");
-            Console.WriteLine("¿Desea agregar el DNI del autorizado a despachar? S/N");
+            Console.WriteLine("¿Desea ingresar el DNI de un autorizado a despachar el servicio? S/N");
             int dniAutorizadoDespacho = 0;
             
             if (Console.ReadLine().ToLower() == "s")
             {
                 while (true)
                 {
-                    Console.WriteLine("Ingrese el DNI:");
+                    Console.WriteLine("Ingrese el DNI del autorizado a despachar:");
                     dniAutorizadoDespacho = int.Parse(Console.ReadLine());
 
                     var ctx = new TPContext();
@@ -267,7 +268,7 @@ namespace TPCAI2021
                         break;
                     } else
                     {
-                        Console.WriteLine("El DNI no existe en la lista de los autorizados por el cliente");
+                        Console.WriteLine("El DNI ingresado no se encuentra en la lista de autorizados por el cliente");
                     }
                 }
                 
@@ -295,7 +296,7 @@ namespace TPCAI2021
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
             if (ordenServicio == null)
             {
-                return "No existe la orden de servicio";
+                return "El número de ingresado no se corresponde a una orden de servicio";
             } else
             {
                 return "ok";
