@@ -16,7 +16,7 @@ namespace TPCAI2021
         public string Calle { get; set; }
         public string Altura { get; set; }
         public int CodigoPostal { get; set; }
-        public string Piso { get; set; }
+        public string? Piso { get; set; }
        // public string Depto { get; set; }
         public Localidad Localidad { get; set; }
 
