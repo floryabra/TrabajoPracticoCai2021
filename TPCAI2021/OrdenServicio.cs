@@ -11,7 +11,9 @@ namespace TPCAI2021
     {
         public int OrdenServicioID { get; set; }
         public Cliente Cliente { get; set; }
-        public TipoServicio TipoServicio { get; set; }
+        public string PrioridadServicio { get; set; }
+        public string RetiroPaquete { get; set; } // Es cuando la empresa obtiene el paquete desde el origen
+        public string EntregaPaquete { get; set; } // Es cuando la empresa entrega el paquete al destino final
         public ICollection<Paquete> Paquetes { get; set; }
         public string EstadoOrden { get; set; }
         public double Tarifa { get; set; }
@@ -64,8 +66,7 @@ namespace TPCAI2021
             Console.WriteLine("");
             string origenEnvio = Console.ReadLine();
 
-            
-
+            string retiroPaquete = "";
             if (origenEnvio == "1")
             {
                 Console.WriteLine("");
@@ -74,10 +75,12 @@ namespace TPCAI2021
 
                 int idSucursalOrigen = int.Parse(Console.ReadLine());
                 sucursalOrigen = Sucursal.getSucursal(idSucursalOrigen);
+                retiroPaquete = "Sucursal";
             }
             else if (origenEnvio == "2")
             {
                 direccionOrigen = Direccion.ingresarDireccion(idLocalidad: idLocalidadOrigen);
+                retiroPaquete = "Domicilio";
             }
 
             // 3 - Destino nacional o internacional
@@ -122,6 +125,7 @@ namespace TPCAI2021
             Console.WriteLine("2) En Puerta");
             Console.WriteLine("");
             string tipoEntrega = Console.ReadLine();
+            string entregaPaquete = "";
             if (tipoEntrega == "1")
             {
 
@@ -137,6 +141,7 @@ namespace TPCAI2021
 
                 int idSucursalDestino = int.Parse(Console.ReadLine());
                 sucursalDestino = Sucursal.getSucursal(idSucursalDestino);
+                entregaPaquete = "Sucursal";
 
             }
             else if (tipoEntrega == "2")
@@ -148,7 +153,9 @@ namespace TPCAI2021
                 {
                     direccionDestino = Direccion.ingresarDireccion(idLocalidad: idLocalidadDestino);
                 }
-                
+
+                entregaPaquete = "Domicilio";
+
             }
 
             // 5 - Entrega urgente
@@ -215,7 +222,19 @@ namespace TPCAI2021
                 }
 
                 tarifa += arrayTarifas[categoriaPaquete, alcanceEntrega];
+
+                if (retiroPaquete == "Domicilio")
+                {
+                    tarifa += 50;
+                }
+
+                if (entregaPaquete == "Domicilio")
+                {
+                    tarifa += 50;
+                }
             }
+
+            string prioridadServicio = "No urgente";
 
             if (urgencia.ToLower() == "s")
             {
@@ -226,13 +245,31 @@ namespace TPCAI2021
                 }
 
                 tarifa += recargo;
+                prioridadServicio = "Urgente";
             }
+
+            Console.WriteLine("***********");
+
+            Console.WriteLine("Se va a crear la siguiente orden de servicio:");
+            Console.WriteLine("");
+            Console.WriteLine("Prioridad:" + prioridadServicio + " | Tipo entrega: " + entregaPaquete + " | Tipo retiro: " + retiroPaquete);
+            int indexPaquetes = 0;
+
+            Console.WriteLine("Paquetes incluidos en la orden: ");
+            Console.WriteLine("--------------------");
+            foreach (Paquete p in paquetes)
+            {
+                Console.WriteLine(indexPaquetes.ToString() + "| Peso: " + p.Peso + " | Tipo: " + p.TipoPaquete);
+            }
+
+            Console.WriteLine("--------------------");
 
             Console.WriteLine("Tarifa:" + tarifa);
 
             // 8 - Confirmar servicio
-            Console.WriteLine("***********");
-            Console.WriteLine("¿Desea confirmar el servicio? S/N");
+            Console.WriteLine("*************************************");
+            Console.WriteLine("* ¿Desea confirmar el servicio? S/N *");
+            Console.WriteLine("*************************************");
             if (Console.ReadLine().ToLower() == "n")
             {
                 return;
@@ -266,11 +303,9 @@ namespace TPCAI2021
                 
             }
 
-            TipoServicio tipoServicio = new TipoServicio();
-
             string estadoOrden = "Orden de servicio iniciada";
 
-            aprobarOrden(cliente, tipoServicio, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
+            aprobarOrden(cliente, prioridadServicio, entregaPaquete, retiroPaquete, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
 
         }
 
@@ -300,12 +335,7 @@ namespace TPCAI2021
             var ctx = new TPContext();
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
 
-            Console.WriteLine("ID | Estado de Orden");
-            Console.WriteLine(
-                ordenServicio.OrdenServicioID + " | " +
-                ordenServicio.EstadoOrden
-                );
-
+            Console.WriteLine("ID: " + ordenServicio.OrdenServicioID + " | Estado de orden: " +ordenServicio.EstadoOrden);
             Console.WriteLine("--------");
 
             return ordenServicio;
@@ -313,7 +343,9 @@ namespace TPCAI2021
 
         public static void aprobarOrden(
             Cliente cliente,
-            TipoServicio tipoServicio, 
+            string prioridadServicio, 
+            string entregaPaquete, 
+            string retiroPaquete,
             List<Paquete> paquetes, 
             double tarifa, 
             int dniAutorizadoDespacho,
@@ -326,7 +358,9 @@ namespace TPCAI2021
             var ctx = new TPContext();
             var ordenServicio = new OrdenServicio() {
                 Cliente = cliente,
-                TipoServicio = tipoServicio, 
+                PrioridadServicio = prioridadServicio,
+                EntregaPaquete = entregaPaquete,
+                RetiroPaquete = retiroPaquete,
                 Paquetes = paquetes,
                 Tarifa = tarifa,
                 DniAutorizadoDespacho = dniAutorizadoDespacho,
