@@ -24,8 +24,8 @@ namespace TPCAI2021
             List<string> menuItems = new List<string>()
             {
                 "Realizar solicitud de servicio",
-                "Consultar estado de servicio",
-                "Consultar estado de cuenta",
+                "Consultar estado de la orden de servicio",
+                "Consultar estado de cuenta corriente",
                 "Gestionar db"
             };
 
@@ -38,15 +38,16 @@ namespace TPCAI2021
                 {
                     OrdenServicio.realizarOrdenServicio(idCliente);
                 }
-                else if (opcionSeleccionada == "Consultar estado de servicio")
+                else if (opcionSeleccionada == "Consultar estado de la orden de servicio")
                 {
+                    //QUE EL USUARIO INGRESE LA ORDEN, SE VALIDA QUE EXISTE, Y SE MUESTRA EL ESTADO
                     Console.WriteLine("Seleccione la orden que desea consultar:");
                     Cliente.listarOrdenesDelCliente(idCliente);
                     int idOrden = int.Parse(Console.ReadLine());
                     OrdenServicio.mostrarOrden(idOrden);
                     
                 }
-                else if (opcionSeleccionada == "Consultar estado de cuenta")
+                else if (opcionSeleccionada == "Consultar estado de cuenta corriente")
                 {
                     Cliente.mostrarEstadoCuenta(idCliente);
                 }
@@ -54,7 +55,7 @@ namespace TPCAI2021
                 {
                     gestionarDatos();
                 }
-                else if (opcionSeleccionada == "Salir")
+                else if (opcionSeleccionada == "Finalizar")
                 {
                     Environment.Exit(0);
                 }
@@ -77,7 +78,7 @@ namespace TPCAI2021
                 indiceMenu++;
             }
 
-            Console.WriteLine(indiceMenu + ") Salir");
+            Console.WriteLine(indiceMenu + ") Finalizar");
             Console.WriteLine("--------");
             string indiceOpcionSeleccionadaMenu = Console.ReadLine();
             if (int.TryParse(indiceOpcionSeleccionadaMenu, out int opcionSeleccionada))
@@ -86,13 +87,13 @@ namespace TPCAI2021
                     return items[opcionSeleccionada - 1].Trim();
                 } else
                 {
-                    return "Salir";
+                    return "Finalizar";
                 }
                 
             } else
             {
                 Console.WriteLine("Opcion inválida");
-                return "Salir";
+                return "Finalizar";
             }
         }
 
@@ -116,7 +117,7 @@ namespace TPCAI2021
                 {
                     Cliente.menuABM();
                 }
-                else if (opcionSeleccionada == "Salir")
+                else if (opcionSeleccionada == "Finalizar")
                 {
                     break;
                 }
