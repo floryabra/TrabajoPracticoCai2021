@@ -104,22 +104,13 @@ namespace TPCAI2021
                 idLocalidadDestino = int.Parse(Console.ReadLine());
                 Localidad localidadDestino = Localidad.getLocalidad(idLocalidadDestino);
 
-            } //ESTO NO IRIA, LE PIDO EL PAIS E INFIERO LA REGION
+            }
             else if (destinoNacional == "2")
             {
                 Console.WriteLine("");
-                Console.WriteLine("Seleccione la región de destino");
-                Console.WriteLine("1) Países limítrofes");
-                Console.WriteLine("2) Resto de América Latina");
-                Console.WriteLine("3) América del Norte");
-                Console.WriteLine("4) Europa");
-                Console.WriteLine("5) Asia");
-                Console.WriteLine("");
-
-                int regionDestino = int.Parse(Console.ReadLine());
-                Console.WriteLine("");
                 Console.WriteLine("Seleccione el pais de destino:");
-                Pais.listarPaises(regionDestino);
+                Pais.listarPaises();
+                idLocalidadDestino = 17; // En los envíos internacionales el paquete viaja a CABA.
                 idPaisDestino = int.Parse(Console.ReadLine());
                 Pais paisDestino = Pais.getPais(idPaisDestino);
             }
