@@ -10,6 +10,7 @@ namespace TPCAI2021
     class OrdenServicio
     {
         public int OrdenServicioID { get; set; }
+        public Cliente Cliente { get; set; }
         public TipoServicio TipoServicio { get; set; }
         public ICollection<Paquete> Paquetes { get; set; }
         public string EstadoOrden { get; set; }
@@ -48,17 +49,17 @@ namespace TPCAI2021
 
             idProvinciaOrigen = int.Parse(Console.ReadLine());
             provinciaOrigen = Provincia.getProvincia(idProvinciaOrigen);
-//Primero localidad y despues tipo de servicio
+            //Primero localidad y despues tipo de servicio
             Console.WriteLine("");
             Console.WriteLine("Seleccione la localidad de origen:");
-            Localidad.listarLocalidades(idProvinciaOrigen);
+            Localidad.listarLocalidadesPorProvincia(idProvinciaOrigen);
             idLocalidadOrigen = int.Parse(Console.ReadLine());
             Localidad localidadOrigen = Localidad.getLocalidad(idLocalidadOrigen);
             
             // 2 - Selección de sucursal o domicilio de origen
             Console.WriteLine("***********");
             Console.WriteLine("El retiro del paquete será:");
-            Console.WriteLine("1) En Sucursal");
+            Console.WriteLine("1) En sucursal");
             Console.WriteLine("2) En puerta");
             Console.WriteLine("");
             string origenEnvio = Console.ReadLine();
@@ -99,7 +100,7 @@ namespace TPCAI2021
 
                 Console.WriteLine("");
                 Console.WriteLine("Seleccione la localidad de destino:");
-                Localidad.listarLocalidades(idProvinciaDestino);
+                Localidad.listarLocalidadesPorProvincia(idProvinciaDestino);
                 idLocalidadDestino = int.Parse(Console.ReadLine());
                 Localidad localidadDestino = Localidad.getLocalidad(idLocalidadDestino);
 
@@ -172,9 +173,7 @@ namespace TPCAI2021
             {
                 paquetes.Add(Paquete.ingresarPaquete());
                 Console.WriteLine("¿Desea agregar otro paquete? S/N"); //INGRESAR S O N, NO 1 O 2
-                Console.WriteLine("1) Si");
-                Console.WriteLine("2) No");
-                if (Console.ReadLine() == "2")
+                if (Console.ReadLine().ToLower() == "n")
                 {
                     break;
                 }
@@ -252,7 +251,10 @@ namespace TPCAI2021
             Console.WriteLine("***********");
             Console.WriteLine("¿Desea ingresar el DNI de un autorizado a despachar el servicio? S/N");
             int dniAutorizadoDespacho = 0;
-            
+
+            var ctx = new TPContext();
+            var cliente = ctx.Clientes.Find(idCliente);
+
             if (Console.ReadLine().ToLower() == "s")
             {
                 while (true)
@@ -260,9 +262,8 @@ namespace TPCAI2021
                     Console.WriteLine("Ingrese el DNI del autorizado a despachar:");
                     dniAutorizadoDespacho = int.Parse(Console.ReadLine());
 
-                    var ctx = new TPContext();
-                    var cliente = ctx.Clientes.Find(idCliente);
-                    bool dniExisteEnAutorizadosCliente = cliente.ListaPersonalAutorizado.Contains(dniAutorizadoDespacho);
+                    
+                    bool dniExisteEnAutorizadosCliente = cliente.ListaPersonalAutorizado.Contains(dniAutorizadoDespacho.ToString());
                     if (dniExisteEnAutorizadosCliente)
                     {
                         break;
@@ -278,7 +279,7 @@ namespace TPCAI2021
 
             string estadoOrden = "Orden de servicio iniciada";
 
-            aprobarOrden(tipoServicio, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
+            aprobarOrden(cliente, tipoServicio, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
 
         }
 
@@ -303,24 +304,36 @@ namespace TPCAI2021
             }
         }
 
-        public OrdenServicio mostrarOrden(int idOrden)
+        public static OrdenServicio mostrarOrden(int idOrden)
         {
             var ctx = new TPContext();
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
-            Console.WriteLine("Origen | Destino | Estado de Orden | Tarifa | Prioridad | Retiro | DNI autorizado");
+
+            Console.WriteLine("ID | Origen | Destino | Estado de Orden | Tarifa | Prioridad | Retiro | DNI autorizado");
             Console.WriteLine(
-                ordenServicio.DireccionOrigen.Calle + ordenServicio.DireccionOrigen.Altura + ordenServicio.SucursalOrigen.Nombre + "|" + 
-                ordenServicio.DireccionDestino.Calle + ordenServicio.DireccionDestino.Altura + ordenServicio.SucursalDestino.Nombre + "|" + 
-                ordenServicio.EstadoOrden + "|" +
-                ordenServicio.Tarifa + "|" +
-                ordenServicio.TipoServicio.PrioridadServicio + "|" +
-                ordenServicio.TipoServicio.RetiroPaquete + "|" +
+                ordenServicio.OrdenServicioID + " | " +
+                ordenServicio.DireccionOrigen.Calle + ordenServicio.DireccionOrigen.Altura + ordenServicio.SucursalOrigen.Nombre + " | " + 
+                ordenServicio.DireccionDestino.Calle + ordenServicio.DireccionDestino.Altura + ordenServicio.SucursalDestino.Nombre + " | " + 
+                ordenServicio.EstadoOrden + " | " +
+                ordenServicio.Tarifa + " | " +
+                ordenServicio.TipoServicio.PrioridadServicio + " | " +
+                ordenServicio.TipoServicio.RetiroPaquete + " | " +
                 ordenServicio.DniAutorizadoDespacho
                 );
+
+            Console.WriteLine("--------");
+            Console.WriteLine("Paquetes incluidos en la orden:");
+            foreach (Paquete p in ordenServicio.Paquetes)
+            {
+                p.mostrarPaquete(p.PaqueteId);
+            }
+            Console.WriteLine("--------");
+
             return ordenServicio;
         }
 
         public static void aprobarOrden(
+            Cliente cliente,
             TipoServicio tipoServicio, 
             List<Paquete> paquetes, 
             double tarifa, 
@@ -332,7 +345,8 @@ namespace TPCAI2021
             string estadoOrden = "Orden de servicio iniciada")
         {
             var ctx = new TPContext();
-            var ordenServicio = new OrdenServicio() { 
+            var ordenServicio = new OrdenServicio() {
+                Cliente = cliente,
                 TipoServicio = tipoServicio, 
                 Paquetes = paquetes,
                 Tarifa = tarifa,
@@ -341,13 +355,13 @@ namespace TPCAI2021
                 DireccionDestino = direccionDestino,
                 SucursalOrigen = sucursalOrigen,
                 SucursalDestino = sucursalDestino,
-                EstadoOrden = estadoOrden,
+                EstadoOrden = estadoOrden
             };
             ctx.OrdenesServicio.Add(ordenServicio);
             ctx.SaveChanges();
-            Console.WriteLine("***********");
-            Console.WriteLine("Orden de servicio generada");
-            Console.WriteLine("***********");
+            Console.WriteLine("******************************");
+            Console.WriteLine("* Orden de servicio generada *");
+            Console.WriteLine("******************************");
         }
     }
 }
