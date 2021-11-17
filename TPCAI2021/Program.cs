@@ -16,8 +16,9 @@ namespace TPCAI2021
             // TODO: Agregar login
 
             Console.WriteLine("Ingrese su nro de cliente");
-            int idCliente = int.Parse(Console.ReadLine());
-            Cliente cliente = Cliente.buscarCliente(idCliente);
+            int loginCliente = int.Parse(Console.ReadLine());
+            Cliente cliente = Cliente.buscarCliente(loginCliente);
+            int idCliente = cliente.ClienteID;
 
 
             List<string> menuItems = new List<string>()
@@ -36,6 +37,18 @@ namespace TPCAI2021
                 if (opcionSeleccionada == "Realizar solicitud de servicio")
                 {
                     OrdenServicio.realizarOrdenServicio(idCliente);
+                }
+                else if (opcionSeleccionada == "Consultar estado de servicio")
+                {
+                    Console.WriteLine("Seleccione la orden que desea consultar:");
+                    Cliente.listarOrdenesDelCliente(idCliente);
+                    int idOrden = int.Parse(Console.ReadLine());
+                    OrdenServicio.mostrarOrden(idOrden);
+                    
+                }
+                else if (opcionSeleccionada == "Consultar estado de cuenta")
+                {
+                    Cliente.mostrarEstadoCuenta(idCliente);
                 }
                 else if (opcionSeleccionada == "Gestionar db")
                 {
