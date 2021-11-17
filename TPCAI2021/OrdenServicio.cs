@@ -282,7 +282,7 @@ namespace TPCAI2021
             return ordenServicio;
         }
 
-        public string validarNumeroOrden(int idOrden)
+        public static string validarNumeroOrden(int idOrden)
         {
             var ctx = new TPContext();
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
@@ -300,24 +300,12 @@ namespace TPCAI2021
             var ctx = new TPContext();
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
 
-            Console.WriteLine("ID | Origen | Destino | Estado de Orden | Tarifa | Prioridad | Retiro | DNI autorizado");
+            Console.WriteLine("ID | Estado de Orden");
             Console.WriteLine(
                 ordenServicio.OrdenServicioID + " | " +
-                ordenServicio.DireccionOrigen.Calle + ordenServicio.DireccionOrigen.Altura + ordenServicio.SucursalOrigen.Nombre + " | " + 
-                ordenServicio.DireccionDestino.Calle + ordenServicio.DireccionDestino.Altura + ordenServicio.SucursalDestino.Nombre + " | " + 
-                ordenServicio.EstadoOrden + " | " +
-                ordenServicio.Tarifa + " | " +
-                ordenServicio.TipoServicio.PrioridadServicio + " | " +
-                ordenServicio.TipoServicio.RetiroPaquete + " | " +
-                ordenServicio.DniAutorizadoDespacho
+                ordenServicio.EstadoOrden
                 );
 
-            Console.WriteLine("--------");
-            Console.WriteLine("Paquetes incluidos en la orden:");
-            foreach (Paquete p in ordenServicio.Paquetes)
-            {
-                p.mostrarPaquete(p.PaqueteId);
-            }
             Console.WriteLine("--------");
 
             return ordenServicio;
