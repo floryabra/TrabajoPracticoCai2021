@@ -112,7 +112,7 @@ namespace TPCAI2021.data
                     ClienteID = 1,
                     NroClienteCorporativo = 00889222,
                     Saldo = 30,
-                    Facturacion = "1",
+                    Facturacion = "Paga",
                     ListaPersonalAutorizado = "123, 124, 125"
                 });
 
@@ -121,7 +121,7 @@ namespace TPCAI2021.data
                     ClienteID = 2,
                     NroClienteCorporativo = 04,
                     Saldo = 3000,
-                    Facturacion = "5",
+                    Facturacion = "Impaga",
                     ListaPersonalAutorizado = "123, 124, 125"
                 });
             context.Clientes.AddRange(defaultClientes);
