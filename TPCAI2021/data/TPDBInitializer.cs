@@ -127,10 +127,29 @@ namespace TPCAI2021.data
             context.Clientes.AddRange(defaultClientes);
 
             // Seed Ordenes de Servicio
+            /*
+             * orden de servicio iniciada, 
+             * entregado en sucursal / retirado, 
+             * en centro de distribución, 
+             * en sucursal para entrega, 
+             * en distribución, 
+             * entregado 
+             */
             IList<OrdenServicio> defaultOrdenesServicio = new List<OrdenServicio>();
             defaultOrdenesServicio.Add(new OrdenServicio()
             {
-                Cliente = defaultClientes[1]
+                Cliente = defaultClientes[1],
+                EstadoOrden = "En centro de distribución"
+            });
+            defaultOrdenesServicio.Add(new OrdenServicio()
+            {
+                Cliente = defaultClientes[1],
+                EstadoOrden = "entregado"
+            });
+            defaultOrdenesServicio.Add(new OrdenServicio()
+            {
+                Cliente = defaultClientes[1],
+                EstadoOrden = "entregado"
             });
             context.OrdenesServicio.AddRange(defaultOrdenesServicio);
 
