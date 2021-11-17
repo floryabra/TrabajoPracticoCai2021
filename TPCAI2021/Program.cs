@@ -17,14 +17,14 @@ namespace TPCAI2021
 
             while (true)
             {
-                Console.WriteLine("Ingrese su nro de cliente");
+                Console.WriteLine("Ingrese su número de cliente: ");
                 int loginCliente = int.Parse(Console.ReadLine());
                 Cliente cliente = Cliente.buscarCliente(loginCliente);
 
                 if (cliente == null)
                 {
                     Console.WriteLine("----------------------------------");
-                    Console.WriteLine("- El Nro de cliente no es válido -");
+                    Console.WriteLine("El número no se corresponde a un cliente corporativo");
                     Console.WriteLine("----------------------------------");
                 } else
                 {
