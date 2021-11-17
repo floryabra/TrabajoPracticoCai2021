@@ -12,14 +12,27 @@ namespace TPCAI2021
     {
         static void Main(string[] args)
         {
-            //Console.CursorVisible = false;
-            // TODO: Agregar login
 
-            Console.WriteLine("Ingrese su nro de cliente");
-            int loginCliente = int.Parse(Console.ReadLine());
-            Cliente cliente = Cliente.buscarCliente(loginCliente);
-            int idCliente = cliente.ClienteID;
+            int idCliente = 0;
 
+            while (true)
+            {
+                Console.WriteLine("Ingrese su nro de cliente");
+                int loginCliente = int.Parse(Console.ReadLine());
+                Cliente cliente = Cliente.buscarCliente(loginCliente);
+
+                if (cliente == null)
+                {
+                    Console.WriteLine("----------------------------------");
+                    Console.WriteLine("- El Nro de cliente no es válido -");
+                    Console.WriteLine("----------------------------------");
+                } else
+                {
+                    idCliente = cliente.ClienteID;
+                    break;
+                }
+                
+            }
 
             List<string> menuItems = new List<string>()
             {
