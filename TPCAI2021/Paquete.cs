@@ -35,7 +35,8 @@ namespace TPCAI2021
             var paquete = new Paquete() { Peso = peso, TipoPaquete = tipoPaquete};
             ctx.Paquetes.Add(paquete);
             ctx.SaveChanges();
-            //Console.WriteLine("Paquete agregado");
+            //Console.WriteLine("Paquete agregado"); 
+            //MOSTRAR TIPO DE PAQUETE DESPUES DE AGREGAR EL PESO
             return paquete;
         }
 
