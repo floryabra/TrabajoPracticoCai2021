@@ -11,27 +11,26 @@ namespace TPCAI2021
     {
         public int ClienteID{ get; set; }
         public int NroClienteCorporativo { get; set; }
-        public string Nombre { get; set; }
-        public int NroCuentaCorriente { get; set; }
         public decimal Saldo { get; set; }
         public string Facturacion { get; set; }
-        public List<int> ListaPersonalAutorizado { get; set; }
+        public string ListaPersonalAutorizado { get; set; }
 
-        public static Cliente buscarCliente(int idCliente)
+        public static Cliente buscarCliente(int nroCliente)
         {
             var ctx = new TPContext();
-            var cliente = ctx.Clientes.Find(idCliente);
-            //Console.WriteLine(cliente.ClienteID + "|" + cliente.Nombre);
+            var cliente = ctx.Clientes
+                    .Where(s => s.NroClienteCorporativo == nroCliente)
+                    .FirstOrDefault<Cliente>();
             return cliente;
         }
 
         public static void ingresarCliente()
         {
             var ctx = new TPContext();
-            Console.WriteLine("Ingrese el nombre del nuevo cliente:");
-            string nombreCliente = Console.ReadLine();
+            Console.WriteLine("Ingrese el nro del nuevo cliente:");
+            int nroCliente = int.Parse(Console.ReadLine());
 
-            var cliente = new Cliente() { Nombre = nombreCliente };
+            var cliente = new Cliente() { NroClienteCorporativo = nroCliente };
             ctx.Clientes.Add(cliente);
             ctx.SaveChanges();
             Console.WriteLine("Cliente agregado.");
@@ -57,13 +56,50 @@ namespace TPCAI2021
             var ctx = new TPContext();
             var clientes = ctx.Clientes.ToList();
 
-            Console.WriteLine("id | Nombre");
+            Console.WriteLine("id | Nro cliente corporativo");
             foreach (Cliente c in clientes)
             {
-                Console.WriteLine(c.ClienteID + "|" + c.Nombre);
+                Console.WriteLine(c.ClienteID + "|" + c.NroClienteCorporativo);
             }
         }
 
+        public static Cliente mostrarEstadoCuenta(int idCliente)
+        {
+            var ctx = new TPContext();
+            var cliente = ctx.Clientes.Find(idCliente);
+            Console.WriteLine("--------------------------");
+            Console.WriteLine("Datos de la cuenta:");
+            Console.WriteLine(
+                "ID: " + cliente.ClienteID +
+                " | Saldo: " + cliente.Saldo +
+                " | Facturación: " + cliente.Facturacion);
+
+            Console.WriteLine("-------------");
+            Console.WriteLine("Personal autorizado a despachar:");
+
+            string[] personas = cliente.ListaPersonalAutorizado.Split(',');
+
+            foreach (var p in personas)
+            {
+                Console.WriteLine("DNI: " + p.Trim());
+            }
+
+            return cliente;
+        }
+
+        public static void listarOrdenesDelCliente(int idCliente)
+        {
+            var ctx = new TPContext();
+            var ordenes = ctx.OrdenesServicio
+                    .Where(s => s.Cliente.ClienteID == idCliente)
+                    .ToList();
+
+            foreach (OrdenServicio o in ordenes)
+            {
+                OrdenServicio.mostrarOrden(o.OrdenServicioID);
+            }
+
+        }
 
         public static void menuABM()
         {
