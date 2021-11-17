@@ -38,5 +38,13 @@ namespace TPCAI2021
             //Console.WriteLine("Paquete agregado");
             return paquete;
         }
+
+        public Paquete mostrarPaquete(int idPaquete)
+        {
+            var ctx = new TPContext();
+            var paquete = ctx.Paquetes.Find(idPaquete);
+            Console.WriteLine("ID: " + paquete.PaqueteId + " | Tipo: " + paquete.TipoPaquete + " | Peso: " + paquete.Peso);
+            return paquete;
+        }
     }
 }
