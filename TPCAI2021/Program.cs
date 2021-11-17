@@ -70,6 +70,7 @@ namespace TPCAI2021
                 else if (opcionSeleccionada == "Consultar estado de cuenta corriente")
                 {
                     Cliente.mostrarEstadoCuenta(idCliente);
+                    Cliente.listarOrdenesDelCliente(idCliente);
                 }
                 else if (opcionSeleccionada == "Gestionar db")
                 {
