@@ -67,28 +67,34 @@ namespace TPCAI2021
         {
             var ctx = new TPContext();
             var cliente = ctx.Clientes.Find(idCliente);
-            Console.WriteLine("--------------------------");
-            Console.WriteLine("Datos de la cuenta:");
+            Console.WriteLine("-----------------------");
+            Console.WriteLine("- Datos de la cuenta: -");
+            Console.WriteLine("-----------------------");
             Console.WriteLine(
                 "ID: " + cliente.ClienteID +
                 " | Saldo: " + cliente.Saldo +
                 " | Facturación: " + cliente.Facturacion);
 
             Console.WriteLine("-------------");
-            Console.WriteLine("Personal autorizado a despachar:");
+
+            /*
+            Console.WriteLine("Lista del personal autorizado a despachar:");
 
             string[] personas = cliente.ListaPersonalAutorizado.Split(',');
 
             foreach (var p in personas)
             {
                 Console.WriteLine("DNI: " + p.Trim());
-            }
+            }*/
 
             return cliente;
         }
 
         public static void listarOrdenesDelCliente(int idCliente)
         {
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("- Ordenes de servicio del cliente: -");
+            Console.WriteLine("------------------------------------");
             var ctx = new TPContext();
             var ordenes = ctx.OrdenesServicio
                     .Where(s => s.Cliente.ClienteID == idCliente)
@@ -98,7 +104,7 @@ namespace TPCAI2021
             {
                 OrdenServicio.mostrarOrden(o.OrdenServicioID);
             }
-
+            Console.WriteLine("-------------");
         }
 
         public static void menuABM()
