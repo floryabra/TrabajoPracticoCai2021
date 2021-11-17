@@ -111,13 +111,29 @@ namespace TPCAI2021.data
                 defaultClientes.Add(new Cliente() {
                     ClienteID = 1,
                     NroClienteCorporativo = 00889222,
-                    Nombre = "TestCliente",
-                    NroCuentaCorriente = 1337, 
                     Saldo = 30,
                     Facturacion = "1",
-                    ListaPersonalAutorizado = new List<int> { 123, 124, 125 }
+                    ListaPersonalAutorizado = "123, 124, 125"
                 });
-                context.Clientes.AddRange(defaultClientes);
+
+                defaultClientes.Add(new Cliente()
+                {
+                    ClienteID = 2,
+                    NroClienteCorporativo = 04,
+                    Saldo = 3000,
+                    Facturacion = "5",
+                    ListaPersonalAutorizado = "123, 124, 125"
+                });
+            context.Clientes.AddRange(defaultClientes);
+
+            // Seed Ordenes de Servicio
+            IList<OrdenServicio> defaultOrdenesServicio = new List<OrdenServicio>();
+            defaultOrdenesServicio.Add(new OrdenServicio()
+            {
+                Cliente = defaultClientes[1]
+            });
+            context.OrdenesServicio.AddRange(defaultOrdenesServicio);
+
             /*Console.WriteLine("id | Sucursal | Localidad");
             foreach (Sucursal sucu in defaultSucursales)
             {
