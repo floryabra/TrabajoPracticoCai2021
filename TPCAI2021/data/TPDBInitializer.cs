@@ -19,7 +19,7 @@ namespace TPCAI2021.data
                 defaultProvincias.Add(new Provincia() { ProvinciaID = 3, Nombre = "Catamarca", IdRegion = 7, Region = "Noroeste" });
                 defaultProvincias.Add(new Provincia() { ProvinciaID = 4, Nombre = "Chaco", IdRegion = 8, Region = "Litoral" });
                 defaultProvincias.Add(new Provincia() { ProvinciaID = 5, Nombre = "Chubut", IdRegion = 1, Region = "Patagonia" });
-                defaultProvincias.Add(new Provincia() { ProvinciaID = 6, Nombre = "Ciudad Autónoma de Buenos Aires", IdRegion = 3, Region = "Ciudad Autónoma de Buenos Aires" });
+                defaultProvincias.Add(new Provincia() { ProvinciaID = 6, Nombre = "Ciudad Autónoma de Buenos Aires", IdRegion = 4, Region = "Buenos Aires" });
                 defaultProvincias.Add(new Provincia() { ProvinciaID = 7, Nombre = "Córdoba", IdRegion = 5, Region = "Sierras" });
                 defaultProvincias.Add(new Provincia() { ProvinciaID = 8, Nombre = "Corrientes", IdRegion = 8, Region = "Litoral" });
                 defaultProvincias.Add(new Provincia() { ProvinciaID = 9, Nombre = "Entre Ríos", IdRegion = 8, Region = "Litoral" });
