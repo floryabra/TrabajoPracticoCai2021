@@ -53,11 +53,18 @@ namespace TPCAI2021
                 }
                 else if (opcionSeleccionada == "Consultar estado de la orden de servicio")
                 {
-                    //QUE EL USUARIO INGRESE LA ORDEN, SE VALIDA QUE EXISTE, Y SE MUESTRA EL ESTADO
-                    Console.WriteLine("Seleccione la orden que desea consultar:");
-                    Cliente.listarOrdenesDelCliente(idCliente);
+                    Console.WriteLine("Ingrese la orden a consultar:");
+                    //Cliente.listarOrdenesDelCliente(idCliente);
                     int idOrden = int.Parse(Console.ReadLine());
-                    OrdenServicio.mostrarOrden(idOrden);
+                    string ordenValida = OrdenServicio.validarNumeroOrden(idOrden);
+
+                    if (ordenValida != "ok")
+                    {
+                        Console.WriteLine(ordenValida);
+                    } else
+                    {
+                        OrdenServicio.mostrarOrden(idOrden);
+                    }
                     
                 }
                 else if (opcionSeleccionada == "Consultar estado de cuenta corriente")
