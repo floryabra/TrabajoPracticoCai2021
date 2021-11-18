@@ -50,12 +50,17 @@ namespace TPCAI2021
             Provincia.listarProvincias();
 
             idProvinciaOrigen = int.Parse(Console.ReadLine());
+            // Validar que el nro de provincia sea un entero error msg "Debe ingresar un número entero"
+            // contenido entre la cant de provincias disponibles: "El número ingresado no corresponde a una provincia"
+            
             provinciaOrigen = Provincia.getProvincia(idProvinciaOrigen);
             //Primero localidad y despues tipo de servicio
             Console.WriteLine("");
             Console.WriteLine("Seleccione la localidad de origen:");
             Localidad.listarLocalidadesPorProvincia(idProvinciaOrigen);
             idLocalidadOrigen = int.Parse(Console.ReadLine());
+            // Validar que el nro de localidad sea un entero error msg "Debe ingresar un número entero"
+            // contenido entre la cant de localidades disponibles: "El número ingresado no corresponde a una localidad"
             Localidad localidadOrigen = Localidad.getLocalidad(idLocalidadOrigen);
             
             // 2 - Selección de sucursal o domicilio de origen
@@ -65,6 +70,8 @@ namespace TPCAI2021
             Console.WriteLine("2) En puerta");
             Console.WriteLine("");
             string origenEnvio = Console.ReadLine();
+            // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
+            // Contenido entre la cant de localidades disponibles: "El número ingresado no corresponde a una opción válida"
 
             string retiroPaquete = "";
             if (origenEnvio == "1")
@@ -74,6 +81,8 @@ namespace TPCAI2021
                 Sucursal.listarSucursales(idLocalidadOrigen);
 
                 int idSucursalOrigen = int.Parse(Console.ReadLine());
+                // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
+                // Contenido entre la cant de sucursales disponibles: "El número ingresado no corresponde a una Sucursal"
                 sucursalOrigen = Sucursal.getSucursal(idSucursalOrigen);
                 retiroPaquete = "Sucursal";
             }
