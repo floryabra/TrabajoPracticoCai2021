@@ -307,7 +307,7 @@ namespace TPCAI2021
 
             var ctx = new TPContext();
             var cliente = ctx.Clientes.Find(idCliente);
-
+            // Validar que se ingresa S o N error msg "Debe ingresar S o N"
             if (Console.ReadLine().ToLower() == "s")
             {
                 while (true)
