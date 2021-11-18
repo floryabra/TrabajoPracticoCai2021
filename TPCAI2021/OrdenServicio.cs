@@ -100,20 +100,26 @@ namespace TPCAI2021
             Console.WriteLine("");
             string destinoNacional = Console.ReadLine();
             
+            // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
+            // Contenido entre la cant de localidades disponibles: "El número ingresado no corresponde a una opción válida"
+            
             if (destinoNacional == "1")
             {
-
                 Console.WriteLine("");
                 Console.WriteLine("Seleccione la provincia de destino:");
                 Provincia.listarProvincias();
 
                 idProvinciaDestino = int.Parse(Console.ReadLine());
+                // Validar que el nro de provincia sea un entero error msg "Debe ingresar un número entero"
+                // contenido entre la cant de provincias disponibles: "El número ingresado no corresponde a una provincia"
                 provinciaDestino = Provincia.getProvincia(idProvinciaDestino);
 
                 Console.WriteLine("");
                 Console.WriteLine("Seleccione la localidad de destino:");
                 Localidad.listarLocalidadesPorProvincia(idProvinciaDestino);
                 idLocalidadDestino = int.Parse(Console.ReadLine());
+                // Validar que el nro de localidad sea un entero error msg "Debe ingresar un número entero"
+                // contenido entre la cant de localidades disponibles: "El número ingresado no corresponde a una localidad"
                 Localidad localidadDestino = Localidad.getLocalidad(idLocalidadDestino);
 
             }
@@ -124,6 +130,8 @@ namespace TPCAI2021
                 Pais.listarPaises();
                 idLocalidadDestino = 17; // En los envíos internacionales el paquete viaja a CABA.
                 idPaisDestino = int.Parse(Console.ReadLine());
+                // Validar que el nro de localidad sea un entero error msg "Debe ingresar un número entero"
+                // contenido entre la cant de paises disponibles: "El número ingresado no corresponde a un país"
                 Pais paisDestino = Pais.getPais(idPaisDestino);
             }
 
@@ -134,6 +142,8 @@ namespace TPCAI2021
             Console.WriteLine("2) En Puerta");
             Console.WriteLine("");
             string tipoEntrega = Console.ReadLine();
+            // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
+            // Contenido entre la cant de localidades disponibles: "El número ingresado no corresponde a una opción válida"
             string entregaPaquete = "";
             if (tipoEntrega == "1")
             {
@@ -149,6 +159,8 @@ namespace TPCAI2021
                 
 
                 int idSucursalDestino = int.Parse(Console.ReadLine());
+                 // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
+                // Contenido entre la cant de sucursales disponibles: "El número ingresado no corresponde a una Sucursal"
                 sucursalDestino = Sucursal.getSucursal(idSucursalDestino);
                 entregaPaquete = "Sucursal";
 
@@ -172,6 +184,7 @@ namespace TPCAI2021
             Console.WriteLine("¿El tipo de servicio que desea realizar, es urgente?  (Se entrega en 48hs, recargo del 10%). Ingrese S o N.");
             Console.WriteLine("");
             string urgencia = Console.ReadLine();
+            // Validar que se ingresa S o N error msg "Debe ingresar S o N"
 
             // 6 - Detalles del paquete
             Console.WriteLine("***********");
@@ -180,6 +193,7 @@ namespace TPCAI2021
             {
                 paquetes.Add(Paquete.ingresarPaquete());
                 Console.WriteLine("¿Desea agregar otro paquete? S/N"); //INGRESAR S O N, NO 1 O 2
+                // Validar que se ingresa S o N error msg "Debe ingresar S o N"
                 if (Console.ReadLine().ToLower() == "n")
                 {
                     break;
@@ -279,6 +293,7 @@ namespace TPCAI2021
             Console.WriteLine("*************************************");
             Console.WriteLine("* ¿Desea confirmar el servicio? S/N *");
             Console.WriteLine("*************************************");
+            // Validar que se ingresa S o N error msg "Debe ingresar S o N"
             if (Console.ReadLine().ToLower() == "n")
             {
                 return;
@@ -287,6 +302,7 @@ namespace TPCAI2021
             // 9 - Agregar DNI autorizado a despachar
             Console.WriteLine("***********");
             Console.WriteLine("¿Desea ingresar el DNI de un autorizado a despachar el servicio? S/N");
+            // Validar que se ingresa S o N error msg "Debe ingresar S o N"
             int dniAutorizadoDespacho = 0;
 
             var ctx = new TPContext();
@@ -297,6 +313,9 @@ namespace TPCAI2021
                 while (true)
                 {
                     Console.WriteLine("Ingrese el DNI del autorizado a despachar:");
+                    // Validar que sea entero "Deber ingresar un número entero"
+                    // Validar que sea de 8 digitos "Debe ingresar 8 digitos"
+                    // Validar que este autorizado, debe existir en la listaPersonalAutorizado "El DNI ingresado no se encuentra en la lista de autorizados por el cliente"
                     dniAutorizadoDespacho = int.Parse(Console.ReadLine());
 
                     
