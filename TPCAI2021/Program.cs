@@ -56,6 +56,8 @@ namespace TPCAI2021
                     Console.WriteLine("Ingrese la orden a consultar:");
                     //Cliente.listarOrdenesDelCliente(idCliente);
                     int idOrden = int.Parse(Console.ReadLine());
+                    // Validar nro entero "Debe ingresar un número entero"
+                    // Validar que exista la tabla orden de servicio "El número ingresado no se corresponde a una orden de servicio"
                     string ordenValida = OrdenServicio.validarNumeroOrden(idOrden);
 
                     if (ordenValida != "ok")
