@@ -18,8 +18,8 @@ namespace TPCAI2021
             string tipoPaquete = "Correspondencia";
             Console.WriteLine("Detalles del paquete a enviar: ");
             Console.WriteLine("Ingrese el peso del paquete (en kg):");
-            decimal peso = decimal.Parse(Console.ReadLine());
-            
+            decimal peso = decimal.Parse(Console.ReadLine()); // validar que es nro "Debe ingresar un número"
+                        
             if (peso > decimal.Parse("30.0"))
             {
                 Console.WriteLine("El paquete excede el máximo permitido (30kg)");
