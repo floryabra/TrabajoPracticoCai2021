@@ -126,28 +126,83 @@ namespace TPCAI2021.data
                 });
             context.Clientes.AddRange(defaultClientes);
 
+            // Seed Tarifas
+            IList<Tarifa> defaultTarifas = new List<Tarifa>();
+            defaultTarifas.Add(new Tarifa()
+            {
+                TarifaID = 1,
+                PesoMaximo = 0.5,
+                Local = 50,
+                Provincial = 100,
+                Regional = 150,
+                Nacional = 200,
+                InternacionalLimitrofe = 400,
+                InternacionalALatina = 450,
+                InternacionalANorte = 500,
+                InternacionalEuropa = 550,
+                InternacionalAsia = 600
+            });
+            defaultTarifas.Add(new Tarifa()
+            {
+                TarifaID = 2,
+                PesoMaximo = 10,
+                Local = 100,
+                Provincial = 150,
+                Regional = 200,
+                Nacional = 250,
+                InternacionalLimitrofe = 450,
+                InternacionalALatina = 500,
+                InternacionalANorte = 550,
+                InternacionalEuropa = 600,
+                InternacionalAsia = 650
+            });
+            defaultTarifas.Add(new Tarifa()
+            {
+                TarifaID = 3,
+                PesoMaximo = 20,
+                Local = 150,
+                Provincial = 200,
+                Regional = 250,
+                Nacional = 300,
+                InternacionalLimitrofe = 500,
+                InternacionalALatina = 550,
+                InternacionalANorte = 600,
+                InternacionalEuropa = 650,
+                InternacionalAsia = 700
+            });
+            defaultTarifas.Add(new Tarifa()
+            {
+                TarifaID = 4,
+                PesoMaximo = 30,
+                Local = 200,
+                Provincial = 250,
+                Regional = 300,
+                Nacional = 350,
+                InternacionalLimitrofe = 550,
+                InternacionalALatina = 600,
+                InternacionalANorte = 650,
+                InternacionalEuropa = 700,
+                InternacionalAsia = 750
+            });
+            context.Clientes.AddRange(defaultClientes);
+
             // Seed Ordenes de Servicio
-            /*
-             * orden de servicio iniciada, 
-             * entregado en sucursal / retirado, 
-             * en centro de distribución, 
-             * en sucursal para entrega, 
-             * en distribución, 
-             * entregado 
-             */
             IList<OrdenServicio> defaultOrdenesServicio = new List<OrdenServicio>();
             defaultOrdenesServicio.Add(new OrdenServicio()
             {
+                OrdenServicioID = 500,
                 Cliente = defaultClientes[1],
                 EstadoOrden = "En centro de distribución"
             });
             defaultOrdenesServicio.Add(new OrdenServicio()
             {
+                OrdenServicioID = 501,
                 Cliente = defaultClientes[1],
                 EstadoOrden = "entregado"
             });
             defaultOrdenesServicio.Add(new OrdenServicio()
             {
+                OrdenServicioID = 502,
                 Cliente = defaultClientes[1],
                 EstadoOrden = "entregado"
             });
