@@ -22,13 +22,18 @@ namespace TPCAI2021
         public static Direccion ingresarDireccion(int idLocalidad, bool alcance = true)
         {
             var ctx = new TPContext();
-
+            
+          
             Console.WriteLine("Ingrese el nombre de la calle:");
             string calle = Console.ReadLine();
-            Console.WriteLine("Ingrese la altura:"); //Validar que sean numeros
+            
+            Console.WriteLine("Ingrese la altura:"); //Validar que sean números "Debe ingresar un número entero"
             string altura = Console.ReadLine();
-            Console.WriteLine("Ingrese el Código Postal:");
+            
+            Console.WriteLine("Ingrese el Código Postal:"); //Validar que sean números "Debe ingresar un número entero"
+            // Validat cant digitos "Debe tener 4 dígitos como máximo"
             int codigoPostal = int.Parse(Console.ReadLine());
+            
             Console.WriteLine("Ingrese Piso y letra del departamento(En caso de que no corresponda, déjelo nulo):");
             string piso = Console.ReadLine();
 
