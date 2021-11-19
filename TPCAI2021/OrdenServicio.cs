@@ -16,7 +16,7 @@ namespace TPCAI2021
         public string EntregaPaquete { get; set; } // Es cuando la empresa entrega el paquete al destino final
         public ICollection<Paquete> Paquetes { get; set; }
         public string EstadoOrden { get; set; }
-        public double Tarifa { get; set; }
+        public double TarifaFinal { get; set; }
         public int DniAutorizadoDespacho { get; set; }
         public Direccion DireccionOrigen { get; set; }
         public Direccion DireccionDestino { get; set; }
@@ -40,6 +40,7 @@ namespace TPCAI2021
             Sucursal sucursalDestino = null;
 
             int idPaisDestino = 0;
+            Pais paisDestino = null;
 
             Console.Clear();
             Console.WriteLine("Nueva orden de servicio");
@@ -114,8 +115,9 @@ namespace TPCAI2021
                 Console.WriteLine("Seleccione el pais de destino:");
                 Pais.listarPaises();
                 idLocalidadDestino = 17; // En los envíos internacionales el paquete viaja a CABA.
+                idProvinciaDestino = 6;
                 idPaisDestino = int.Parse(Console.ReadLine());
-                Pais paisDestino = Pais.getPais(idPaisDestino);
+                paisDestino = Pais.getPais(idPaisDestino);
             }
 
             // 4 - Entrega en sucursal o particular
@@ -154,6 +156,12 @@ namespace TPCAI2021
                     direccionDestino = Direccion.ingresarDireccion(idLocalidad: idLocalidadDestino);
                 }
 
+                if (direccionOrigen == direccionDestino)
+                {
+                    Console.WriteLine("La dirección de origen no puede ser igual a la dirección de destino");
+                    return;
+                }
+
                 entregaPaquete = "Domicilio";
 
             }
@@ -180,48 +188,52 @@ namespace TPCAI2021
             // 7 - Cálculo de tarifa
             Console.WriteLine("***********");
             double tarifa = 0;
-            int[,] arrayTarifas = new int[,] { { 50, 100, 150, 200, 250 }, { 100, 150, 200, 250, 300 }, { 150, 200, 250, 300, 350 }, { 200, 250, 300, 350, 400 } };
-            int alcanceEntrega;
-            int categoriaPaquete;
-
-            if (idLocalidadOrigen == idLocalidadDestino)
-            {
-                alcanceEntrega = 0;
-            } 
-            else if (idProvinciaOrigen == idProvinciaDestino)
-            {
-                alcanceEntrega = 1;
-            } else if (destinoNacional == "2")
-            {
-                alcanceEntrega = 4;
-            }
-            else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
-            {
-                alcanceEntrega = 2;
-            } else 
-            {
-                alcanceEntrega = 3;
-            }
 
             foreach(Paquete p in paquetes)
             {
-                if (p.Peso < decimal.Parse("0.5"))
+
+                Tarifa tarifario = Tarifa.obtenerTarifario(p.Peso);
+
+                if (idLocalidadOrigen == idLocalidadDestino)
                 {
-                    categoriaPaquete = 0;
-                } else if  (p.Peso < 10)
-                {
-                    categoriaPaquete = 1;
+                    tarifa = tarifario.Local;
                 }
-                else if (p.Peso < 20)
+                else if (idProvinciaOrigen == idProvinciaDestino)
                 {
-                    categoriaPaquete = 2;
+                    tarifa = tarifario.Provincial;
+                }
+                else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
+                {
+                    tarifa = tarifario.Regional;
                 }
                 else
                 {
-                    categoriaPaquete = 3;
+                    tarifa = tarifario.Nacional;
                 }
 
-                tarifa += arrayTarifas[categoriaPaquete, alcanceEntrega];
+                if (destinoNacional == "2")
+                {
+                    if (paisDestino.RegionID == 1)
+                    {
+                        tarifa += tarifario.InternacionalLimitrofe;
+                    }
+                    else if (paisDestino.RegionID == 2)
+                    {
+                        tarifa += tarifario.InternacionalALatina;
+                    }
+                    else if (paisDestino.RegionID == 3)
+                    {
+                        tarifa += tarifario.InternacionalANorte;
+                    }
+                    else if (paisDestino.RegionID == 4)
+                    {
+                        tarifa += tarifario.InternacionalEuropa;
+                    }
+                    else
+                    {
+                        tarifa += tarifario.InternacionalAsia;
+                    }
+                }
 
                 if (retiroPaquete == "Domicilio")
                 {
@@ -290,7 +302,6 @@ namespace TPCAI2021
                     Console.WriteLine("Ingrese el DNI del autorizado a despachar:");
                     dniAutorizadoDespacho = int.Parse(Console.ReadLine());
 
-                    
                     bool dniExisteEnAutorizadosCliente = cliente.ListaPersonalAutorizado.Contains(dniAutorizadoDespacho.ToString());
                     if (dniExisteEnAutorizadosCliente)
                     {
@@ -362,7 +373,7 @@ namespace TPCAI2021
                 EntregaPaquete = entregaPaquete,
                 RetiroPaquete = retiroPaquete,
                 Paquetes = paquetes,
-                Tarifa = tarifa,
+                TarifaFinal = tarifa,
                 DniAutorizadoDespacho = dniAutorizadoDespacho,
                 DireccionOrigen = direccionOrigen,
                 DireccionDestino = direccionDestino,
