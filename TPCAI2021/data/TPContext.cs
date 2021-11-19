@@ -17,6 +17,7 @@ namespace TPCAI2021.data
         public DbSet<Paquete> Paquetes { get; set; }
         public DbSet<Provincia> Provincias { get; set; }
         public DbSet<Sucursal> Sucursales { get; set; }
+        public DbSet<Tarifa> Tarifas { get; set; }
 
         public TPContext() : base("TPDB")
         {
