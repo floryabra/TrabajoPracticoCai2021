@@ -10,7 +10,7 @@ namespace TPCAI2021
     class Paquete
     {
         public int PaqueteId { get; set; }
-        public decimal Peso { get; set; }
+        public double Peso { get; set; }
         public string TipoPaquete { get; set; }
 
         public static Paquete ingresarPaquete()
@@ -18,14 +18,14 @@ namespace TPCAI2021
             string tipoPaquete = "Correspondencia";
             Console.WriteLine("Detalles del paquete a enviar: ");
             Console.WriteLine("Ingrese el peso del paquete (en kg):");
-            decimal peso = decimal.Parse(Console.ReadLine());
+            double peso = double.Parse(Console.ReadLine());
             
-            if (peso > decimal.Parse("30.0"))
+            if (peso > double.Parse("30.0"))
             {
                 Console.WriteLine("El paquete excede el máximo permitido (30kg)");
             }
 
-            if (peso > decimal.Parse("0.5"))
+            if (peso > double.Parse("0.5"))
             {
                 tipoPaquete = "Encomienda";
             }
