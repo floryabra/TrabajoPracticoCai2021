@@ -163,7 +163,7 @@ namespace TPCAI2021
                 
 
                 int idSucursalDestino = int.Parse(Console.ReadLine());
-                 // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
+                // Validar que las opciones sean 1 o 2 error msg "Debe ingresar un número entero"
                 // Contenido entre la cant de sucursales disponibles: "El número ingresado no corresponde a una Sucursal"
                 sucursalDestino = Sucursal.getSucursal(idSucursalDestino);
                 entregaPaquete = "Sucursal";
@@ -193,8 +193,20 @@ namespace TPCAI2021
             Console.WriteLine("***********");
             Console.WriteLine("¿El tipo de servicio que desea realizar, es urgente?  (Se entrega en 48hs, recargo del 10%). Ingrese S o N.");
             Console.WriteLine("");
-            string urgencia = Console.ReadLine();
-            // Validar que se ingresa S o N error msg "Debe ingresar S o N"
+            string urgencia;
+
+            while (true)
+            {
+                urgencia = Console.ReadLine();
+                if (urgencia.ToLower() == "s" || urgencia.ToLower() == "n")
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Debe ingresar S o N");
+                }
+            }
 
             // 6 - Detalles del paquete
             Console.WriteLine("***********");
@@ -202,9 +214,22 @@ namespace TPCAI2021
             while (true)
             {
                 paquetes.Add(Paquete.ingresarPaquete());
-                Console.WriteLine("¿Desea agregar otro paquete? S/N"); //INGRESAR S O N, NO 1 O 2
-                // Validar que se ingresa S o N error msg "Debe ingresar S o N"
-                if (Console.ReadLine().ToLower() == "n")
+                Console.WriteLine("¿Desea agregar otro paquete? S/N");
+                string agregarMasPaquetes;
+                while (true)
+                {
+                    agregarMasPaquetes = Console.ReadLine();
+                    if (agregarMasPaquetes.ToLower() == "s" || agregarMasPaquetes.ToLower() == "n")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Debe ingresar S o N");
+                    }
+                }
+
+                if (agregarMasPaquetes.ToLower() == "n")
                 {
                     break;
                 }
