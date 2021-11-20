@@ -29,8 +29,6 @@ namespace TPCAI2021
             var ctx = new TPContext();
             Console.WriteLine("Ingrese el nro del nuevo cliente:");
             int nroCliente = int.Parse(Console.ReadLine());
-            // Valida entero "Ingrese un número entero"
-            // Valida que el cliente sea corpo "El número ingresado no se corresponde con un cliente coorporativo"
 
             var cliente = new Cliente() { NroClienteCorporativo = nroCliente };
             ctx.Clientes.Add(cliente);
