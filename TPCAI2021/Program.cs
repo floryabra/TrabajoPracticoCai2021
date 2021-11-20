@@ -39,7 +39,7 @@ namespace TPCAI2021
                 "Realizar solicitud de servicio",
                 "Consultar estado de la orden de servicio",
                 "Consultar estado de cuenta corriente",
-                "Gestionar db"
+                //"Gestionar db"
             };
 
 
@@ -55,17 +55,25 @@ namespace TPCAI2021
                 {
                     Console.WriteLine("Ingrese la orden a consultar:");
                     //Cliente.listarOrdenesDelCliente(idCliente);
-                    int idOrden = int.Parse(Console.ReadLine());
-                    // Validar nro entero "Debe ingresar un número entero"
-                    // Validar que exista la tabla orden de servicio "El número ingresado no se corresponde a una orden de servicio"
-                    string ordenValida = OrdenServicio.validarNumeroOrden(idOrden);
+                    int idOrden;
+                    
+                    bool idOrdenNumerica = int.TryParse(Console.ReadLine(), out idOrden);
+                    if (idOrdenNumerica)
+                    {
+                        string ordenValida = OrdenServicio.validarNumeroOrden(idOrden);
 
-                    if (ordenValida != "ok")
+                        if (ordenValida != "ok")
+                        {
+                            Console.WriteLine(ordenValida);
+                        }
+                        else
+                        {
+                            OrdenServicio.mostrarOrden(idOrden);
+                        }
+                    }
+                    else
                     {
-                        Console.WriteLine(ordenValida);
-                    } else
-                    {
-                        OrdenServicio.mostrarOrden(idOrden);
+                        Console.WriteLine("Debe ingresar un número entero");
                     }
                     
                 }
