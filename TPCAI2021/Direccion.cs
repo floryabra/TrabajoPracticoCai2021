@@ -14,7 +14,7 @@ namespace TPCAI2021
         public int DireccionId { get; set; }
         public bool AlcanceNacional { get; set; }
         public string Calle { get; set; }
-        public string Altura { get; set; }
+        public int Altura { get; set; }
         public int CodigoPostal { get; set; }
         public string Piso { get; set; }
         public Localidad Localidad { get; set; }
@@ -27,13 +27,34 @@ namespace TPCAI2021
             Console.WriteLine("Ingrese el nombre de la calle:");
             string calle = Console.ReadLine();
             
-            Console.WriteLine("Ingrese la altura:"); //Validar que sean números "Debe ingresar un número entero"
-            string altura = Console.ReadLine();
+            Console.WriteLine("Ingrese la altura:");
+            int altura;
             
-            Console.WriteLine("Ingrese el Código Postal:"); //Validar que sean números "Debe ingresar un número entero"
-            // Validat cant digitos "Debe tener 4 dígitos como máximo"
-            int codigoPostal = int.Parse(Console.ReadLine());
+            while (true)
+            {
+                bool alturaValida = int.TryParse(Console.ReadLine(), out altura);
+                if (alturaValida) { break; } else { Console.WriteLine("Debe ingresar un número entero"); }
+            }
             
+            Console.WriteLine("Ingrese el Código Postal:");
+            
+            int codigoPostal;
+            while (true)
+            {
+                bool cpValido = int.TryParse(Console.ReadLine(), out codigoPostal);
+
+                if (cpValido && codigoPostal.ToString().Length <= 4)
+                {
+                    break;
+                } else if (!cpValido) { 
+                    Console.WriteLine("Debe ingresar un número entero");
+                }
+                else if (codigoPostal.ToString().Length > 4) { 
+                    Console.WriteLine("Debe tener 4 dígitos como máximo");
+                }
+
+            }
+
             Console.WriteLine("Ingrese Piso y letra del departamento(En caso de que no corresponda, déjelo nulo):");
             string piso = Console.ReadLine();
 
