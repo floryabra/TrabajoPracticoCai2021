@@ -19,18 +19,29 @@ namespace TPCAI2021
             Console.WriteLine("Detalles del paquete a enviar: ");
             Console.WriteLine("Ingrese el peso del paquete (en kg):");
 
-            double peso = double.Parse(Console.ReadLine());// validar que es nro "Debe ingresar un número"
+            double peso = 0;
+            while (true) { 
+                bool pesoValido = double.TryParse(Console.ReadLine(), out peso);
+                if (pesoValido)
+                {
+                    if (peso > double.Parse("30.0"))
 
-            if (peso > double.Parse("30.0"))
+                    {
+                        Console.WriteLine("El paquete excede el máximo permitido (30kg)");
+                    }
 
-            {
-                Console.WriteLine("El paquete excede el máximo permitido (30kg)");
+                    if (peso > double.Parse("0.5"))
+                    {
+                        tipoPaquete = "Encomienda";
+                    }
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Debe ingresar un número");
+                }
             }
 
-            if (peso > double.Parse("0.5"))
-            {
-                tipoPaquete = "Encomienda";
-            }
 
             var ctx = new TPContext();
 
