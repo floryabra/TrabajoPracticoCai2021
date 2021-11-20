@@ -184,7 +184,7 @@ namespace TPCAI2021.data
                 InternacionalEuropa = 700,
                 InternacionalAsia = 750
             });
-            context.Clientes.AddRange(defaultClientes);
+            context.Tarifas.AddRange(defaultTarifas);
 
             // Seed Ordenes de Servicio
             IList<OrdenServicio> defaultOrdenesServicio = new List<OrdenServicio>();
