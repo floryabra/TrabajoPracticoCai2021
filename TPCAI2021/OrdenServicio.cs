@@ -105,7 +105,7 @@ namespace TPCAI2021
             }
             
             
-            // 2 - Selección de sucursal o domicilio de origen
+            // 2 - Selección de sucursal o en puerta de origen
             Console.WriteLine("***********");
             Console.WriteLine("El retiro del paquete será:");
             Console.WriteLine("1) En sucursal");
@@ -166,7 +166,7 @@ namespace TPCAI2021
             else if (origenEnvio == "2")
             {
                 direccionOrigen = Direccion.ingresarDireccion(idLocalidad: idLocalidadOrigen);
-                retiroPaquete = "Domicilio";
+                retiroPaquete = "Puerta";
             }
 
             // 3 - Destino nacional o internacional
@@ -379,7 +379,7 @@ namespace TPCAI2021
                     return;
                 }
 
-                entregaPaquete = "Domicilio";
+                entregaPaquete = "Puerta";
 
             }
 
@@ -479,12 +479,12 @@ namespace TPCAI2021
                     }
                 }
 
-                if (retiroPaquete == "Domicilio")
+                if (retiroPaquete == "Puerta")
                 {
                     tarifa += 50;
                 }
 
-                if (entregaPaquete == "Domicilio")
+                if (entregaPaquete == "Puerta")
                 {
                     tarifa += 50;
                 }
