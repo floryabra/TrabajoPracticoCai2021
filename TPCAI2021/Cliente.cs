@@ -93,7 +93,7 @@ namespace TPCAI2021
         public static void listarOrdenesDelCliente(int idCliente)
         {
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("- Ordenes de servicio del cliente: -");
+            Console.WriteLine("- Lista de servicios cumplidos pendientes de facturacion: -");
             Console.WriteLine("------------------------------------");
             var ctx = new TPContext();
             var ordenes = ctx.OrdenesServicio
