@@ -30,6 +30,10 @@ namespace TPCAI2021
 
             int idProvinciaOrigen = 0;
             int idProvinciaDestino = 0;
+
+            Localidad localidadOrigen = null;
+            Localidad localidadDestino = null;
+
             Provincia provinciaOrigen = null;
             Provincia provinciaDestino = null;
 
@@ -82,7 +86,7 @@ namespace TPCAI2021
                 if (idLocalidadOrigenValida)
                 {
 
-                    Localidad localidadOrigen = Localidad.getLocalidad(idLocalidadOrigen);
+                    localidadOrigen = Localidad.getLocalidad(idLocalidadOrigen);
 
                     if (localidadOrigen == null)
                     {
@@ -231,7 +235,7 @@ namespace TPCAI2021
                     if (idLocalidadDestinoValida)
                     {
 
-                        Localidad localidadDestino = Localidad.getLocalidad(idLocalidadDestino);
+                        localidadDestino = Localidad.getLocalidad(idLocalidadDestino);
 
                         if (localidadDestino == null)
                         {
@@ -445,58 +449,70 @@ namespace TPCAI2021
 
                 Tarifa tarifario = Tarifa.obtenerTarifario(p.Peso);
 
-                if (idLocalidadOrigen == idLocalidadDestino)
-                {
-                    tarifa = tarifario.Local;
-                }
-                else if (idProvinciaOrigen == idProvinciaDestino)
-                {
-                    tarifa = tarifario.Provincial;
-                }
-                else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
-                {
-                    tarifa = tarifario.Regional;
-                }
-                else
-                {
-                    tarifa = tarifario.Nacional;
-                }
-
                 if (destinoNacional == "2")
                 {
                     if (paisDestino.RegionID == 1)
                     {
+                        Console.WriteLine("DEBUG: Internacional limitrofe");
                         tarifa += tarifario.InternacionalLimitrofe;
                     }
                     else if (paisDestino.RegionID == 2)
                     {
+                        Console.WriteLine("DEBUG: Internacional A. Latina");
                         tarifa += tarifario.InternacionalALatina;
                     }
                     else if (paisDestino.RegionID == 3)
                     {
+                        Console.WriteLine("DEBUG: Internacional A. Norte");
                         tarifa += tarifario.InternacionalANorte;
                     }
                     else if (paisDestino.RegionID == 4)
                     {
+                        Console.WriteLine("DEBUG: Internacional A. Europa");
                         tarifa += tarifario.InternacionalEuropa;
                     }
                     else
                     {
+                        Console.WriteLine("DEBUG: Internacional Asia");
                         tarifa += tarifario.InternacionalAsia;
                     }
+                } else if (idLocalidadOrigen == idLocalidadDestino)
+                {
+                    Console.WriteLine("DEBUG: Localidad origen = Localidad destino");
+                    tarifa += tarifario.Local;
                 }
+                else if (idProvinciaOrigen == idProvinciaDestino)
+                {
+                    Console.WriteLine("DEBUG: Provincia origen = provincia destino");
+                    tarifa += tarifario.Provincial;
+                }
+                else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
+                {
+                    Console.WriteLine("DEBUG: Region origen = Region destino");
+                    tarifa += tarifario.Regional;
+                }
+                else if (destinoNacional == "1")
+                {
+                    Console.WriteLine("DEBUG: tarifa nacional");
+                    tarifa += tarifario.Nacional;
+                }
+
+                Console.WriteLine("DEBUG: Tarifa hasta acá: " + tarifa.ToString());
 
                 if (retiroPaquete == "Puerta")
                 {
+                    Console.WriteLine("DEBUG: +50 por ser retiro en puerta");
                     tarifa += 50;
                 }
 
                 if (entregaPaquete == "Puerta")
                 {
+                    Console.WriteLine("DEBUG: +50 por ser entrega en puerta");
                     tarifa += 50;
                 }
             }
 
+            Console.WriteLine("DEBUG: Tarifa hasta acá: " + tarifa.ToString());
             string prioridadServicio = "No urgente";
 
             if (urgencia.ToLower() == "s")
@@ -510,22 +526,56 @@ namespace TPCAI2021
                 tarifa += recargo;
                 prioridadServicio = "Urgente";
             }
-
+            Console.WriteLine("DEBUG: Tarifa según prioridad: " + tarifa.ToString());
             Console.WriteLine("***********");
 
-            Console.WriteLine("Se va a crear la siguiente orden de servicio:");
-            Console.WriteLine("");
-            Console.WriteLine("Prioridad:" + prioridadServicio + " | Tipo entrega: " + entregaPaquete + " | Tipo retiro: " + retiroPaquete);
-            int indexPaquetes = 0;
+            Console.WriteLine("Datos del servicio:");
+            Console.WriteLine("Tipo de Servicio");
+            Console.WriteLine("    Prioridad: " + prioridadServicio);
+            Console.WriteLine("    Retiro: " + retiroPaquete);
+            Console.WriteLine("    Entrega: " + entregaPaquete);
 
-            Console.WriteLine("Paquetes incluidos en la orden: ");
-            Console.WriteLine("--------------------");
+            Console.WriteLine("Paquetes:");
+            int indexPaquetes = 0;
             foreach (Paquete p in paquetes)
             {
-                Console.WriteLine(indexPaquetes.ToString() + "| Peso: " + p.Peso + " | Tipo: " + p.TipoPaquete);
+                Console.WriteLine("    ID Paquete: " + indexPaquetes.ToString());
+                Console.WriteLine("    Tipo: " + p.TipoPaquete);
+                Console.WriteLine("    Peso: " + p.Peso);
             }
 
-            Console.WriteLine("--------------------");
+            string textoOrigen;
+            string textoDestino;
+
+            if (retiroPaquete == "Puerta")
+            {
+                textoOrigen = direccionOrigen.Calle + ", " + direccionOrigen.Altura.ToString() + ", " + direccionOrigen.CodigoPostal.ToString() + ", " + localidadOrigen.Nombre;
+            }
+            else
+            {
+                textoOrigen = sucursalOrigen.Nombre;
+            }
+
+            if (entregaPaquete == "Puerta")
+            {
+                textoDestino = direccionDestino.Calle + ", " + direccionDestino.Altura.ToString() + ", "+ direccionDestino.CodigoPostal.ToString() + ", " + localidadDestino.Nombre;
+            }
+            else
+            {
+                textoDestino = sucursalDestino.Nombre;
+            }
+            Console.WriteLine("Dirección de Origen:");
+            Console.WriteLine(textoOrigen);
+            Console.WriteLine("Dirección de Destino:");
+            Console.WriteLine(textoDestino);
+
+            if (destinoNacional == "1")
+            {
+                Console.WriteLine("Alcance: Nacional");
+            } else
+            {
+                Console.WriteLine("Alcance: Internacional");
+            }
 
             Console.WriteLine("Tarifa:" + tarifa);
 
@@ -679,6 +729,12 @@ namespace TPCAI2021
             Console.WriteLine("*****************************************");
             Console.WriteLine("* Orden de servicio generada con el ID " + ordenServicio.OrdenServicioID + "*");
             Console.WriteLine("*****************************************");
+
+            if (dniAutorizadoDespacho != 0)
+            {
+                Console.WriteLine("DNI Autorizado a despachar: " + dniAutorizadoDespacho.ToString());
+            }
+
         }
     }
 }
