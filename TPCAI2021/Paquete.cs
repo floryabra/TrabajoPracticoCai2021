@@ -25,16 +25,17 @@ namespace TPCAI2021
                 if (pesoValido)
                 {
                     if (peso > double.Parse("30.0"))
-
                     {
                         Console.WriteLine("El paquete excede el máximo permitido (30kg)");
-                    }
-
-                    if (peso > double.Parse("0.5"))
+                    } else
                     {
-                        tipoPaquete = "Encomienda";
+                        if (peso > double.Parse("0.5"))
+                        {
+                            tipoPaquete = "Encomienda";
+                        }
+
+                        break;
                     }
-                    break;
                 }
                 else
                 {
