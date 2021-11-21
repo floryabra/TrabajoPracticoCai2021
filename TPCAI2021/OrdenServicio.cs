@@ -447,53 +447,57 @@ namespace TPCAI2021
             foreach(Paquete p in paquetes)
             {
 
+                Console.WriteLine("----------");
+
                 Tarifa tarifario = Tarifa.obtenerTarifario(p.Peso);
+
+                Console.WriteLine("Inicio tarifa:" + tarifa.ToString());
 
                 if (destinoNacional == "2")
                 {
                     if (paisDestino.RegionID == 1)
                     {
-                        Console.WriteLine("DEBUG: Internacional limitrofe");
+                        Console.WriteLine("DEBUG - Internacional limitrofe. +" + tarifario.InternacionalLimitrofe.ToString());
                         tarifa += tarifario.InternacionalLimitrofe;
                     }
                     else if (paisDestino.RegionID == 2)
                     {
-                        Console.WriteLine("DEBUG: Internacional A. Latina");
+                        Console.WriteLine("DEBUG - Internacional A. Latina. +" + tarifario.InternacionalALatina.ToString());
                         tarifa += tarifario.InternacionalALatina;
                     }
                     else if (paisDestino.RegionID == 3)
                     {
-                        Console.WriteLine("DEBUG: Internacional A. Norte");
+                        Console.WriteLine("DEBUG - Internacional A. Norte. +" + tarifario.InternacionalANorte.ToString());
                         tarifa += tarifario.InternacionalANorte;
                     }
                     else if (paisDestino.RegionID == 4)
                     {
-                        Console.WriteLine("DEBUG: Internacional A. Europa");
+                        Console.WriteLine("DEBUG - Internacional A. Europa. +" + tarifario.InternacionalEuropa.ToString());
                         tarifa += tarifario.InternacionalEuropa;
                     }
                     else
                     {
-                        Console.WriteLine("DEBUG: Internacional Asia");
+                        Console.WriteLine("DEBUG - Internacional Asia. +" + tarifario.InternacionalAsia.ToString());
                         tarifa += tarifario.InternacionalAsia;
                     }
                 } else if (idLocalidadOrigen == idLocalidadDestino)
                 {
-                    Console.WriteLine("DEBUG: Localidad origen = Localidad destino");
+                    Console.WriteLine("DEBUG - Localidad origen = Localidad destino. +" + tarifario.Local.ToString());
                     tarifa += tarifario.Local;
                 }
                 else if (idProvinciaOrigen == idProvinciaDestino)
                 {
-                    Console.WriteLine("DEBUG: Provincia origen = provincia destino");
+                    Console.WriteLine("DEBUG - Provincia origen = provincia destino. +" + tarifario.Provincial.ToString());
                     tarifa += tarifario.Provincial;
                 }
                 else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
                 {
-                    Console.WriteLine("DEBUG: Region origen = Region destino");
+                    Console.WriteLine("DEBUG - Region origen = Region destino. +" + tarifario.Regional.ToString());
                     tarifa += tarifario.Regional;
                 }
                 else if (destinoNacional == "1")
                 {
-                    Console.WriteLine("DEBUG: tarifa nacional");
+                    Console.WriteLine("DEBUG: tarifa nacional. +" + tarifario.Nacional.ToString());
                     tarifa += tarifario.Nacional;
                 }
 
@@ -522,11 +526,12 @@ namespace TPCAI2021
                 {
                     recargo = 500;
                 }
+                Console.WriteLine("DEBUG - Recargo tarifa:" + recargo.ToString());
 
                 tarifa += recargo;
                 prioridadServicio = "Urgente";
             }
-            Console.WriteLine("DEBUG: Tarifa según prioridad: " + tarifa.ToString());
+            Console.WriteLine("DEBUG: Tarifa total: " + tarifa.ToString());
             Console.WriteLine("***********");
 
             Console.WriteLine("Datos del servicio:");
@@ -577,7 +582,7 @@ namespace TPCAI2021
                 Console.WriteLine("Alcance: Internacional");
             }
 
-            Console.WriteLine("Tarifa:" + tarifa);
+            Console.WriteLine("Tarifa: " + tarifa);
 
             // 8 - Confirmar servicio
             Console.WriteLine("*************************************");
