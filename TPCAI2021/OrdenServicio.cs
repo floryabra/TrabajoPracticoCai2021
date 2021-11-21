@@ -351,7 +351,14 @@ namespace TPCAI2021
                         }
                         else
                         {
-                            break;
+                            if ((destinoNacional == "1" && sucursalDestino.LocalidadID != idLocalidadDestino) || (destinoNacional == "2" && sucursalDestino.PaisID != idPaisDestino))
+                            {
+                                Console.WriteLine("El número de sucursal no corresponde al destino seleccionado");
+                            }
+                            else 
+                            {
+                                break;
+                            }
                         }
 
                     }
@@ -391,8 +398,8 @@ namespace TPCAI2021
 
             while (true)
             {
-                urgencia = Console.ReadLine();
-                if (urgencia.ToLower() == "s" || urgencia.ToLower() == "n")
+                urgencia = Console.ReadLine().ToLower();
+                if (urgencia == "s" || urgencia == "n")
                 {
                     break;
                 }
@@ -412,8 +419,8 @@ namespace TPCAI2021
                 string agregarMasPaquetes;
                 while (true)
                 {
-                    agregarMasPaquetes = Console.ReadLine();
-                    if (agregarMasPaquetes.ToLower() == "s" || agregarMasPaquetes.ToLower() == "n")
+                    agregarMasPaquetes = Console.ReadLine().ToLower();
+                    if (agregarMasPaquetes == "s" || agregarMasPaquetes == "n")
                     {
                         break;
                     }
@@ -554,7 +561,7 @@ namespace TPCAI2021
             string agregarDniAutorizado;
             while (true)
             {
-                agregarDniAutorizado = Console.ReadLine();
+                agregarDniAutorizado = Console.ReadLine().ToLower();
 
                 if (agregarDniAutorizado == "s" || agregarDniAutorizado == "n")
                 {
@@ -669,9 +676,9 @@ namespace TPCAI2021
             };
             ctx.OrdenesServicio.Add(ordenServicio);
             ctx.SaveChanges();
-            Console.WriteLine("******************************");
-            Console.WriteLine("* Orden de servicio generada *");
-            Console.WriteLine("******************************");
+            Console.WriteLine("*****************************************");
+            Console.WriteLine("* Orden de servicio generada con el ID " + ordenServicio.OrdenServicioID + "*");
+            Console.WriteLine("*****************************************");
         }
     }
 }
