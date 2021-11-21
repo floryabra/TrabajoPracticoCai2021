@@ -116,15 +116,19 @@ namespace TPCAI2021
             {
                 if (opcionSeleccionada <= items.Count) {
                     return items[opcionSeleccionada - 1].Trim();
-                } else
+                } else if (opcionSeleccionada == items.Count +1)
                 {
                     return "Finalizar";
+                } else
+                {
+                    Console.WriteLine("Opción inválida");
+                    return "invalido";
                 }
                 
             } else
             {
                 Console.WriteLine("Opcion inválida");
-                return "Finalizar";
+                return "invalido";
             }
         }
 
