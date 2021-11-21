@@ -265,6 +265,7 @@ namespace TPCAI2021
                 Pais.listarPaises();
                 idLocalidadDestino = 17; // En los envíos internacionales el paquete viaja a CABA.
                 idProvinciaDestino = 6;
+                provinciaDestino = Provincia.getProvincia(idProvinciaDestino);
 
                 while (true)
                 {
@@ -451,7 +452,40 @@ namespace TPCAI2021
 
                 Tarifa tarifario = Tarifa.obtenerTarifario(p.Peso);
 
-                Console.WriteLine("Inicio tarifa:" + tarifa.ToString());
+                Console.WriteLine("Peso del paquete: " + p.Peso.ToString());
+
+                Console.WriteLine("DEBUG - Inicio tarifa: " + tarifa.ToString());
+
+                if (destinoNacional == "2")
+                {
+                    Console.WriteLine("DEBUG - Aunque sea internacional, primero calculamos la tarifa hacia CABA");
+                }
+
+                if (idLocalidadOrigen == idLocalidadDestino)
+                {
+                    Console.WriteLine("DEBUG - Envío local +" + tarifario.Local.ToString());
+                    tarifa += tarifario.Local;
+                }
+                else if (idProvinciaOrigen == idProvinciaDestino)
+                {
+                    Console.WriteLine("DEBUG - Envío provincial +" + tarifario.Provincial.ToString());
+                    tarifa += tarifario.Provincial;
+                }
+                else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
+                {
+                    Console.WriteLine("DEBUG - Envío regional +" + tarifario.Regional.ToString());
+                    tarifa += tarifario.Regional;
+                }
+                else
+                {
+                    Console.WriteLine("DEBUG - Envío interregional. +" + tarifario.Nacional.ToString());
+                    tarifa += tarifario.Nacional;
+                }
+
+                if (destinoNacional == "2")
+                {
+                    Console.WriteLine("DEBUG - Tarifa hasta CABA: " + tarifa.ToString());
+                }
 
                 if (destinoNacional == "2")
                 {
@@ -480,39 +514,20 @@ namespace TPCAI2021
                         Console.WriteLine("DEBUG - Internacional Asia. +" + tarifario.InternacionalAsia.ToString());
                         tarifa += tarifario.InternacionalAsia;
                     }
-                } else if (idLocalidadOrigen == idLocalidadDestino)
-                {
-                    Console.WriteLine("DEBUG - Localidad origen = Localidad destino. +" + tarifario.Local.ToString());
-                    tarifa += tarifario.Local;
                 }
-                else if (idProvinciaOrigen == idProvinciaDestino)
-                {
-                    Console.WriteLine("DEBUG - Provincia origen = provincia destino. +" + tarifario.Provincial.ToString());
-                    tarifa += tarifario.Provincial;
-                }
-                else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
-                {
-                    Console.WriteLine("DEBUG - Region origen = Region destino. +" + tarifario.Regional.ToString());
-                    tarifa += tarifario.Regional;
-                }
-                else if (destinoNacional == "1")
-                {
-                    Console.WriteLine("DEBUG: tarifa nacional. +" + tarifario.Nacional.ToString());
-                    tarifa += tarifario.Nacional;
-                }
-
-                Console.WriteLine("DEBUG: Tarifa hasta acá: " + tarifa.ToString());
+                
+                Console.WriteLine("DEBUG: Tarifa total por distancia: " + tarifa.ToString());
 
                 if (retiroPaquete == "Puerta")
                 {
-                    Console.WriteLine("DEBUG: +50 por ser retiro en puerta");
                     tarifa += 50;
+                    Console.WriteLine("DEBUG  +50 por ser retiro en puerta. Total: " + tarifa.ToString());
                 }
 
                 if (entregaPaquete == "Puerta")
                 {
-                    Console.WriteLine("DEBUG: +50 por ser entrega en puerta");
                     tarifa += 50;
+                    Console.WriteLine("DEBUG  +50 por ser retiro en puerta. Total: " + tarifa.ToString());
                 }
             }
 
@@ -547,6 +562,7 @@ namespace TPCAI2021
                 Console.WriteLine("    ID Paquete: " + indexPaquetes.ToString());
                 Console.WriteLine("    Tipo: " + p.TipoPaquete);
                 Console.WriteLine("    Peso: " + p.Peso);
+                Console.WriteLine("");
             }
 
             string textoOrigen;
