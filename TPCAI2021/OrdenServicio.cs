@@ -698,7 +698,7 @@ namespace TPCAI2021
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
             if (ordenServicio == null)
             {
-                return "El número de ingresado no se corresponde a una orden de servicio";
+                return "El número ingresado no se corresponde a una orden de servicio";
             } else
             {
                 return "ok";
@@ -710,7 +710,7 @@ namespace TPCAI2021
             var ctx = new TPContext();
             var ordenServicio = ctx.OrdenesServicio.Find(idOrden);
 
-            Console.WriteLine("El estado de la orden de Servicio " + ordenServicio.OrdenServicioID + "es: " +ordenServicio.EstadoOrden);
+            Console.WriteLine("El estado de la orden de Servicio " + ordenServicio.OrdenServicioID + " es: " +ordenServicio.EstadoOrden);
             Console.WriteLine("--------");
 
             return ordenServicio;
