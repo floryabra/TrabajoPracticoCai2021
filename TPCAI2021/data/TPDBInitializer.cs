@@ -204,7 +204,7 @@ namespace TPCAI2021.data
             {
                 OrdenServicioID = 502,
                 Cliente = defaultClientes[1],
-                EstadoOrden = "entregado"
+                EstadoOrden = "retirado en sucursal"
             });
             context.OrdenesServicio.AddRange(defaultOrdenesServicio);
 
