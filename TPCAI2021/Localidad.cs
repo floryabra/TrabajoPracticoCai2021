@@ -19,7 +19,6 @@ namespace TPCAI2021
         public virtual Provincia Provincia { get; set; }
         public ICollection<Sucursal> Sucursales { get; set; }
 
-
         public static Localidad getLocalidad(int idLocalidad)
         {
             var ctx = new TPContext();
