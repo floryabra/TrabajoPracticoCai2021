@@ -26,7 +26,6 @@ namespace TPCAI2021
             var ctx = new TPContext();
             var tarifa = ctx.Tarifas
                     .Where(s => s.PesoMaximo >= peso)
-                    //.OrderByDescending(s => s.PesoMaximo)
                     .FirstOrDefault<Tarifa>();
             return tarifa;
         }
