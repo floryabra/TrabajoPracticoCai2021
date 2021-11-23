@@ -25,8 +25,15 @@ namespace TPCAI2021
             
           
             Console.WriteLine("Ingrese el nombre de la calle:");
-            string calle = Console.ReadLine();
-            
+            string calle;
+
+            while (true)
+            {
+                calle = Console.ReadLine();
+                if (calle != "") { break; } else { Console.WriteLine("Debe ingresar la calle"); }
+            }
+
+
             Console.WriteLine("Ingrese la altura:");
             int altura;
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,12 @@ namespace TPCAI2021
     {
         static void Main(string[] args)
         {
-
+            CultureInfo.CurrentCulture = new CultureInfo("es-MX", true); // Inexplicable, pero en es-AR tenemos problemas para parsear los double.
             int idCliente = 0;
 
             while (true)
             {
+
                 Console.WriteLine("Ingrese su número de cliente: ");
                 int loginCliente = int.Parse(Console.ReadLine());
                 Cliente cliente = Cliente.buscarCliente(loginCliente);
