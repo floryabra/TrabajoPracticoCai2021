@@ -22,52 +22,6 @@ namespace TPCAI2021
         public int? PaisID { get; set; }
         public virtual Pais Pais { get; set; }
 
-        public static void agregarSucursal()
-        {
-            var ctx = new TPContext();
-            Console.WriteLine("Ingrese el nombre de la nueva sucursal:");
-            string nombreSucursal = Console.ReadLine();
-            Localidad localidad = null;
-            Pais pais = null;
-
-            Console.WriteLine("¿La sucursal es nacional? S/N");
-            string tipoSucursal = Console.ReadLine();
-
-            if (tipoSucursal == "s")
-            {
-                Console.WriteLine("Ingrese el código de localidad de la nueva sucursal:");
-                int idLocalidad = int.Parse(Console.ReadLine());
-                localidad = ctx.Localidades.Find(idLocalidad);
-            } else
-            {
-                Console.WriteLine("Ingrese el código del pais:");
-                int idPais = int.Parse(Console.ReadLine());
-                pais = ctx.Paises.Find(idPais);
-            }
-
-            
-
-            var sucursal = new Sucursal() { Nombre = nombreSucursal, Localidad = localidad, Pais = pais};
-            ctx.Sucursales.Add(sucursal);
-            ctx.SaveChanges();
-            Console.WriteLine("Sucursal agregada.");
-        }
-
-        public static void eliminarSucural()
-        {
-            var ctx = new TPContext();
-
-            Console.WriteLine("Ingrese el id de la sucursal a eliminar:");
-
-            int idSucursal = int.Parse(Console.ReadLine());
-            Sucursal sucursal = ctx.Sucursales.Find(idSucursal);
-
-            ctx.Sucursales.Remove(sucursal);
-            ctx.SaveChanges();
-
-            Console.WriteLine("Sucursal eliminada");
-        }
-
         public static void listarSucursales(int idLocalidadSolicitada = 0, int idPaisSolicitado = 0)
         {
             var ctx = new TPContext();
@@ -114,39 +68,5 @@ namespace TPCAI2021
             return sucursal;
         }
 
-
-        public static void menuABM()
-        {
-            List<string> menuItems = new List<string>()
-            {
-                "Agregar sucursal",
-                "Eliminar sucursal",
-                "Listar sucursales"
-            };
-
-            while (true)
-            {
-                
-                string opcionSeleccionada = Program.mostrarMenu(menuItems);
-
-                if (opcionSeleccionada == "Agregar sucursal")
-                {
-                    agregarSucursal();
-                }
-                else if (opcionSeleccionada == "Eliminar sucursal")
-                {
-                    eliminarSucural();
-                }
-                else if (opcionSeleccionada == "Listar sucursales") 
-                {
-                    listarSucursales();
-                }
-                else if (opcionSeleccionada == "Salir")
-                {
-                    break;
-                }
-                Console.ReadKey();
-            }
-        }
     }
 }
