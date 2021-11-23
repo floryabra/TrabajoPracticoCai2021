@@ -447,91 +447,61 @@ namespace TPCAI2021
 
             foreach(Paquete p in paquetes)
             {
-
-                Console.WriteLine("----------");
-
                 Tarifa tarifario = Tarifa.obtenerTarifario(p.Peso);
-
-                Console.WriteLine("Peso del paquete: " + p.Peso.ToString());
-
-                Console.WriteLine("DEBUG - Inicio tarifa: " + tarifa.ToString());
-
-                if (destinoNacional == "2")
-                {
-                    Console.WriteLine("DEBUG - Aunque sea internacional, primero calculamos la tarifa hacia CABA");
-                }
 
                 if (idLocalidadOrigen == idLocalidadDestino)
                 {
-                    Console.WriteLine("DEBUG - Envío local +" + tarifario.Local.ToString());
                     tarifa += tarifario.Local;
                 }
                 else if (idProvinciaOrigen == idProvinciaDestino)
                 {
-                    Console.WriteLine("DEBUG - Envío provincial +" + tarifario.Provincial.ToString());
                     tarifa += tarifario.Provincial;
                 }
                 else if (provinciaOrigen.IdRegion == provinciaDestino.IdRegion)
                 {
-                    Console.WriteLine("DEBUG - Envío regional +" + tarifario.Regional.ToString());
                     tarifa += tarifario.Regional;
                 }
                 else
                 {
-                    Console.WriteLine("DEBUG - Envío interregional. +" + tarifario.Nacional.ToString());
                     tarifa += tarifario.Nacional;
-                }
-
-                if (destinoNacional == "2")
-                {
-                    Console.WriteLine("DEBUG - Tarifa hasta CABA: " + tarifa.ToString());
                 }
 
                 if (destinoNacional == "2")
                 {
                     if (paisDestino.RegionID == 1)
                     {
-                        Console.WriteLine("DEBUG - Internacional limitrofe. +" + tarifario.InternacionalLimitrofe.ToString());
                         tarifa += tarifario.InternacionalLimitrofe;
                     }
                     else if (paisDestino.RegionID == 2)
                     {
-                        Console.WriteLine("DEBUG - Internacional A. Latina. +" + tarifario.InternacionalALatina.ToString());
                         tarifa += tarifario.InternacionalALatina;
                     }
                     else if (paisDestino.RegionID == 3)
                     {
-                        Console.WriteLine("DEBUG - Internacional A. Norte. +" + tarifario.InternacionalANorte.ToString());
                         tarifa += tarifario.InternacionalANorte;
                     }
                     else if (paisDestino.RegionID == 4)
                     {
-                        Console.WriteLine("DEBUG - Internacional A. Europa. +" + tarifario.InternacionalEuropa.ToString());
                         tarifa += tarifario.InternacionalEuropa;
                     }
                     else
                     {
-                        Console.WriteLine("DEBUG - Internacional Asia. +" + tarifario.InternacionalAsia.ToString());
                         tarifa += tarifario.InternacionalAsia;
                     }
                 }
                 
-                Console.WriteLine("DEBUG: Tarifa total por distancia: " + tarifa.ToString());
 
                 if (retiroPaquete == "Puerta")
                 {
                     tarifa += 50;
-                    Console.WriteLine("DEBUG  +50 por ser retiro en puerta. Total: " + tarifa.ToString());
                 }
 
                 if (entregaPaquete == "Puerta")
                 {
                     tarifa += 50;
-                    Console.WriteLine("DEBUG  +50 por ser retiro en puerta. Total: " + tarifa.ToString());
                 }
             }
 
-            Console.WriteLine("DEBUG: Tarifa hasta acá: " + tarifa.ToString());
             string prioridadServicio = "No urgente";
 
             if (urgencia.ToLower() == "s")
@@ -541,13 +511,10 @@ namespace TPCAI2021
                 {
                     recargo = 500;
                 }
-                Console.WriteLine("DEBUG - Recargo tarifa:" + recargo.ToString());
 
                 tarifa += recargo;
                 prioridadServicio = "Urgente";
             }
-            Console.WriteLine("DEBUG: Tarifa total: " + tarifa.ToString());
-            Console.WriteLine("***********");
 
             Console.WriteLine("Datos del servicio:");
             Console.WriteLine("Tipo de Servicio");
@@ -556,13 +523,14 @@ namespace TPCAI2021
             Console.WriteLine("    Entrega: " + entregaPaquete);
 
             Console.WriteLine("Paquetes:");
-            int indexPaquetes = 0;
+            int indexPaquetes = 1;
             foreach (Paquete p in paquetes)
             {
                 Console.WriteLine("    ID Paquete: " + indexPaquetes.ToString());
                 Console.WriteLine("    Tipo: " + p.TipoPaquete);
                 Console.WriteLine("    Peso: " + p.Peso);
                 Console.WriteLine("");
+                indexPaquetes++;
             }
 
             string textoOrigen;
@@ -681,6 +649,7 @@ namespace TPCAI2021
             string estadoOrden = "Orden de servicio iniciada";
 
             aprobarOrden(cliente, prioridadServicio, entregaPaquete, retiroPaquete, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
+            Cliente.actualizarSaldoCuenta(idCliente, tarifa);
 
         }
 
