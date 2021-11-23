@@ -40,8 +40,7 @@ namespace TPCAI2021
             {
                 "Realizar solicitud de servicio",
                 "Consultar estado de la orden de servicio",
-                "Consultar estado de cuenta corriente",
-                //"Gestionar db"
+                "Consultar estado de cuenta corriente"
             };
 
 
@@ -83,10 +82,6 @@ namespace TPCAI2021
                 {
                     Cliente.mostrarEstadoCuenta(idCliente);
                     Cliente.listarOrdenesDelCliente(idCliente);
-                }
-                else if (opcionSeleccionada == "Gestionar db")
-                {
-                    gestionarDatos();
                 }
                 else if (opcionSeleccionada == "Finalizar")
                 {
@@ -134,32 +129,5 @@ namespace TPCAI2021
             }
         }
 
-        static void gestionarDatos()
-        {
-            List<string> menuItems = new List<string>()
-            {
-                "Sucursales",
-                "Clientes"
-            };
-
-            while (true)
-            {
-                string opcionSeleccionada = mostrarMenu(menuItems, "Seleccione los datos a gestionar");
-
-                if (opcionSeleccionada == "Sucursales")
-                {
-                    Sucursal.menuABM();
-                }
-                else if (opcionSeleccionada == "Clientes")
-                {
-                    Cliente.menuABM();
-                }
-                else if (opcionSeleccionada == "Finalizar")
-                {
-                    break;
-                }
-                Console.ReadLine();
-            }
-        }
     }
 }
