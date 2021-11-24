@@ -647,8 +647,7 @@ namespace TPCAI2021
             }
 
             string estadoOrden = "Orden de servicio iniciada";
-
-            aprobarOrden(cliente, prioridadServicio, entregaPaquete, retiroPaquete, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
+            aprobarOrden(idCliente, prioridadServicio, entregaPaquete, retiroPaquete, paquetes, tarifa, dniAutorizadoDespacho, direccionOrigen, direccionDestino, sucursalOrigen, sucursalDestino, estadoOrden);
             Cliente.actualizarSaldoCuenta(idCliente, tarifa);
 
         }
@@ -686,7 +685,7 @@ namespace TPCAI2021
         }
 
         public static void aprobarOrden(
-            Cliente cliente,
+            int idCliente,
             string prioridadServicio, 
             string entregaPaquete, 
             string retiroPaquete,
@@ -700,6 +699,7 @@ namespace TPCAI2021
             string estadoOrden = "Orden de servicio iniciada")
         {
             var ctx = new TPContext();
+            var cliente = ctx.Clientes.Find(idCliente);
             var ordenServicio = new OrdenServicio() {
                 Cliente = cliente,
                 PrioridadServicio = prioridadServicio,
