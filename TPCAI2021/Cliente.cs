@@ -33,19 +33,17 @@ namespace TPCAI2021
             Console.WriteLine("-----------------------");
             Console.WriteLine(
                 "ID: " + cliente.ClienteID +
-                " | Saldo: " + cliente.Saldo +
+                " | Saldo: $" + cliente.Saldo +
                 " | Facturación: " + cliente.Facturacion);
-
-            Console.WriteLine("-------------");
 
             return cliente;
         }
 
         public static void listarOrdenesDelCliente(int idCliente)
         {
-            Console.WriteLine("------------------------------------");
+            Console.WriteLine("-----------------------------------------------------------");
             Console.WriteLine("- Lista de servicios cumplidos pendientes de facturacion: -");
-            Console.WriteLine("------------------------------------");
+            Console.WriteLine("-----------------------------------------------------------");
             var ctx = new TPContext();
             var ordenes = ctx.OrdenesServicio
                     .Where(s => s.Cliente.ClienteID == idCliente)
@@ -53,7 +51,7 @@ namespace TPCAI2021
 
             foreach (OrdenServicio o in ordenes)
             {
-                OrdenServicio.mostrarOrden(o.OrdenServicioID);
+                Console.WriteLine("ID: " + o.OrdenServicioID + "    $" + o.TarifaFinal);
             }
             Console.WriteLine("-------------");
         }
