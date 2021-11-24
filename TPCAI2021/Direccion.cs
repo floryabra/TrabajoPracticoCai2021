@@ -40,7 +40,18 @@ namespace TPCAI2021
             while (true)
             {
                 bool alturaValida = int.TryParse(Console.ReadLine(), out altura);
-                if (alturaValida) { break; } else { Console.WriteLine("Debe ingresar un número entero"); }
+                if (alturaValida) {
+                    if (altura < 0)
+                    {
+                        Console.WriteLine("Debe ingresar un numero mayor a 0");
+                    } else
+                    {
+                        break;
+                    }
+                    
+                } else { 
+                    Console.WriteLine("Debe ingresar un número entero"); 
+                }
             }
             
             Console.WriteLine("Ingrese el Código Postal:");
@@ -58,6 +69,10 @@ namespace TPCAI2021
                 }
                 else if (codigoPostal.ToString().Length > 4) { 
                     Console.WriteLine("Debe tener 4 dígitos como máximo");
+                }
+                else if (codigoPostal < 0)
+                {
+                    Console.WriteLine("Debe ingresar un numero mayor a 0");
                 }
 
             }
