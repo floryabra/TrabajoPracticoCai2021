@@ -111,7 +111,7 @@ namespace TPCAI2021.data
                 defaultClientes.Add(new Cliente() {
                     ClienteID = 1,
                     NroClienteCorporativo = 00889222,
-                    Saldo = 30,
+                    Saldo = 0,
                     Facturacion = "Paga",
                     ListaPersonalAutorizado = "39123678, 37985635, 25896547"
                 });
@@ -119,8 +119,8 @@ namespace TPCAI2021.data
                 defaultClientes.Add(new Cliente()
                 {
                     ClienteID = 2,
-                    NroClienteCorporativo = 04,
-                    Saldo = 3000,
+                    NroClienteCorporativo = 44,
+                    Saldo = 2700,
                     Facturacion = "Impaga",
                     ListaPersonalAutorizado = "40698532, 31456852, 32843612"
                 });
