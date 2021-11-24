@@ -26,7 +26,7 @@ namespace TPCAI2021
                 {
                     if (peso < 0)
                     {
-                        Console.WriteLine("El peso debe de ser positivo");
+                        Console.WriteLine("Debe ingresar un numero mayor a 0");
                     }
                     else if (peso > double.Parse("30.0"))
                     {
