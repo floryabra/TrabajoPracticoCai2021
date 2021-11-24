@@ -24,7 +24,11 @@ namespace TPCAI2021
                 bool pesoValido = double.TryParse(Console.ReadLine(), out peso);
                 if (pesoValido)
                 {
-                    if (peso > double.Parse("30.0"))
+                    if (peso < 0)
+                    {
+                        Console.WriteLine("El peso debe de ser positivo");
+                    }
+                    else if (peso > double.Parse("30.0"))
                     {
                         Console.WriteLine("El paquete excede el máximo permitido (30kg)");
                     } else
