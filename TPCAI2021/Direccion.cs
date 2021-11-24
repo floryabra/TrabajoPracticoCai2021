@@ -61,7 +61,7 @@ namespace TPCAI2021
             {
                 bool cpValido = int.TryParse(Console.ReadLine(), out codigoPostal);
 
-                if (cpValido && codigoPostal.ToString().Length <= 4)
+                if ((cpValido) && (codigoPostal.ToString().Length <= 4) && (codigoPostal > 0))
                 {
                     break;
                 } else if (!cpValido) { 
@@ -70,7 +70,7 @@ namespace TPCAI2021
                 else if (codigoPostal.ToString().Length > 4) { 
                     Console.WriteLine("Debe tener 4 dígitos como máximo");
                 }
-                else if (codigoPostal < 0)
+                else if (codigoPostal <= 0)
                 {
                     Console.WriteLine("Debe ingresar un numero mayor a 0");
                 }
