@@ -192,19 +192,22 @@ namespace TPCAI2021.data
             {
                 OrdenServicioID = 500,
                 Cliente = defaultClientes[1],
+                TarifaFinal = 1000,
                 EstadoOrden = "En centro de distribución"
             });
             defaultOrdenesServicio.Add(new OrdenServicio()
             {
                 OrdenServicioID = 501,
+                TarifaFinal = 1500,
                 Cliente = defaultClientes[1],
-                EstadoOrden = "entregado"
+                EstadoOrden = "Entregado"
             });
             defaultOrdenesServicio.Add(new OrdenServicio()
             {
                 OrdenServicioID = 502,
+                TarifaFinal = 200,
                 Cliente = defaultClientes[1],
-                EstadoOrden = "retirado en sucursal"
+                EstadoOrden = "Retirado en sucursal"
             });
             context.OrdenesServicio.AddRange(defaultOrdenesServicio);
 
