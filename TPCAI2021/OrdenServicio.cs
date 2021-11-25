@@ -547,7 +547,17 @@ namespace TPCAI2021
 
             if (entregaPaquete == "Puerta")
             {
-                textoDestino = direccionDestino.Calle + ", " + direccionDestino.Altura.ToString() + ", "+ direccionDestino.CodigoPostal.ToString() + ", " + localidadDestino.Nombre;
+                string aclaracionDestino;
+                if (destinoNacional == "1")
+                {
+                    aclaracionDestino = localidadDestino.Nombre;
+                }
+                else
+                {
+                    aclaracionDestino = paisDestino.Nombre;
+                }
+
+                textoDestino = direccionDestino.Calle + ", " + direccionDestino.Altura.ToString() + ", "+ direccionDestino.CodigoPostal.ToString() + ", " + aclaracionDestino;
             }
             else
             {
